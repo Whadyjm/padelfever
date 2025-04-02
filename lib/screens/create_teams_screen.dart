@@ -1,9 +1,13 @@
+import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'package:padelpoint/theme/colors.dart';
 import 'package:padelpoint/widgets/PlayersTextField.dart';
+import 'package:padelpoint/widgets/addPlayersSection.dart';
+import 'package:provider/provider.dart';
 import '../models/game.dart';
 import '../models/player.dart' show Player;
 import '../models/team.dart' show Team;
+import '../providers/btn_provider.dart';
 import '../theme/text.dart';
 import '../widgets/appBtn.dart';
 import 'match_screen.dart';
@@ -67,6 +71,8 @@ class _CreateTeamsScreenState extends State<CreateTeamsScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final btnProvider = Provider.of<BtnProvider>(context);
+
     return Scaffold(
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16),
@@ -76,59 +82,124 @@ class _CreateTeamsScreenState extends State<CreateTeamsScreen> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               // Team 1
-              SizedBox(
-                width: MediaQuery.of(context).size.width,
-                child: TextField(
-                  controller: _team1NameController,
-                  decoration: InputDecoration(
-                    suffixIcon: Icon(Icons.edit, size: 20),
-                    border: InputBorder.none,
-                    hintText: "Ingresa el nombre del equipo A (opcional)",
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Column(
+                    children: [
+                      SizedBox(
+                        width: MediaQuery.of(context).size.width - 100,
+                        child: TextField(
+                          controller: _team1NameController,
+                          decoration: InputDecoration(
+                            border: InputBorder.none,
+                            hintText:
+                                "Ingresa el nombre del equipo A (opcional)",
+                          ),
+                          style: AppText.subtitleStyle(Colors.grey.shade700),
+                        ),
+                      ),
+                      Visibility(
+                        visible: btnProvider.showTextField1 ? true : false,
+                        child: FadeInRight(
+                          duration: const Duration(milliseconds: 800),
+                          animate: true,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              PlayersTextField(
+                                nombre: _team1Player1Controller,
+                                hintText: 'Jugador 1',
+                              ),
+                              PlayersTextField(
+                                nombre: _team1Player2Controller,
+                                hintText: 'Jugador 2',
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
-                  style: AppText.subtitleStyle(Colors.grey.shade700),
-                ),
+                  AddPlayersSection(
+                    controller1: _team1Player1Controller,
+                    controller2: _team1Player2Controller,
+                    showTextField: btnProvider.showTextField1,
+                    toggleTextfield: btnProvider.toggleTextField1,
+                  ),
+                ],
               ),
-              PlayersTextField(
-                nombre: _team1Player1Controller,
-                hintText: 'Nombre de jugador 1',
-              ),
-              PlayersTextField(
-                nombre: _team1Player2Controller,
-                hintText: 'Nombre de jugador 2',
-              ),
-              const SizedBox(height: 20),
-
+              const SizedBox(height: 30),
               // Team 2
-              SizedBox(
-                width: MediaQuery.of(context).size.width,
-                child: TextField(
-                  controller: _team2NameController,
-                  decoration: InputDecoration(
-                    suffixIcon: Icon(Icons.edit, size: 20),
-                    border: InputBorder.none,
-                    hintText: "Ingresa el nombre del equipo B (opcional)",
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Column(
+                    children: [
+                      SizedBox(
+                        width: MediaQuery.of(context).size.width - 100,
+                        child: TextField(
+                          controller: _team2NameController,
+                          decoration: InputDecoration(
+                            border: InputBorder.none,
+                            hintText:
+                                "Ingresa el nombre del equipo B (opcional)",
+                          ),
+                          style: AppText.subtitleStyle(Colors.grey.shade700),
+                        ),
+                      ),
+                      Visibility(
+                        visible: btnProvider.showTextField2 ? true : false,
+                        child: FadeInRight(
+                          duration: const Duration(milliseconds: 800),
+                          animate: true,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              PlayersTextField(
+                                nombre: _team2Player1Controller,
+                                hintText: 'Jugador 1',
+                              ),
+                              PlayersTextField(
+                                nombre: _team2Player2Controller,
+                                hintText: 'Jugador 2',
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
-                  style: AppText.subtitleStyle(Colors.grey.shade700),
-                ),
-              ),
-              PlayersTextField(
-                nombre: _team2Player1Controller,
-                hintText: 'Nombre de jugador 1',
-              ),
-              PlayersTextField(
-                nombre: _team2Player2Controller,
-                hintText: 'Nombre de jugador 2',
+                  AddPlayersSection(
+                    controller1: _team2Player1Controller,
+                    controller2: _team2Player2Controller,
+                    showTextField: btnProvider.showTextField2,
+                    toggleTextfield: btnProvider.toggleTextField2,
+                  ),
+                ],
               ),
               const SizedBox(height: 20),
               // Game system
-              Text(
-                'Sistema de juego',
-                style: AppText.subtitleStyle(Colors.grey.shade700),
+              Row(
+                children: [
+                  Text(
+                    'Sistema de juego',
+                    style: AppText.subtitleStyle(Colors.grey.shade700),
+                  ),
+                  const SizedBox(width: 20),
+                  Expanded(
+                    child: Divider(color: Colors.grey.shade300, thickness: 0.8),
+                  ),
+                ],
               ),
+              const SizedBox(height: 20,),
               RadioListTile<GameSystem>(
                 hoverColor: Colors.transparent,
                 activeColor: AppColors.primaryColorLight,
-                title: const Text('Sistema de ventaja'),
+                title: Text(
+                  'Sistema de ventaja',
+                  style: AppText.smallTextStyle(Colors.grey.shade700),
+                ),
                 value: GameSystem.advantage,
                 groupValue: _gameSystem,
                 onChanged: (value) {
@@ -140,7 +211,10 @@ class _CreateTeamsScreenState extends State<CreateTeamsScreen> {
               RadioListTile<GameSystem>(
                 hoverColor: Colors.transparent,
                 activeColor: Colors.amber,
-                title: const Text('Punto de oro'),
+                title: Text(
+                  'Punto de oro',
+                  style: AppText.smallTextStyle(Colors.grey.shade700),
+                ),
                 value: GameSystem.goldenPoint,
                 groupValue: _gameSystem,
                 onChanged: (value) {
@@ -150,7 +224,6 @@ class _CreateTeamsScreenState extends State<CreateTeamsScreen> {
                 },
               ),
               const SizedBox(height: 50),
-
               // Start button
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
