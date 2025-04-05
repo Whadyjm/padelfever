@@ -28,10 +28,29 @@ class _CreateTeamsScreenState extends State<CreateTeamsScreen> {
   final _team1Player2Controller = TextEditingController();
   final _team2Player1Controller = TextEditingController();
   final _team2Player2Controller = TextEditingController();
+  bool team1Ready = false;
+  bool team2Ready = false;
   GameSystem _gameSystem = GameSystem.advantage;
 
   @override
+  void initState() {
+    _team1Player1Controller.addListener(_updateButtonColor);
+    _team1Player2Controller.addListener(_updateButtonColor);
+    _team2Player1Controller.addListener(_updateButtonColor);
+    _team2Player2Controller.addListener(_updateButtonColor);
+    super.initState();
+  }
+
+  void _updateButtonColor() {
+    setState(() {});
+  }
+
+  @override
   void dispose() {
+    _team1Player1Controller.removeListener(_updateButtonColor);
+    _team1Player2Controller.removeListener(_updateButtonColor);
+    _team2Player1Controller.removeListener(_updateButtonColor);
+    _team2Player2Controller.removeListener(_updateButtonColor);
     _team1NameController.dispose();
     _team2NameController.dispose();
     _team1Player1Controller.dispose();
@@ -115,6 +134,25 @@ class _CreateTeamsScreenState extends State<CreateTeamsScreen> {
                                 nombre: _team1Player2Controller,
                                 hintText: 'Jugador 2',
                               ),
+                              const SizedBox(width: 20),
+                              SizedBox(
+                                height: 40,
+                                width: 40,
+                                child: FloatingActionButton(
+                                  backgroundColor:
+                                      (_team1Player1Controller
+                                                  .text
+                                                  .isNotEmpty &&
+                                              _team1Player2Controller
+                                                  .text
+                                                  .isNotEmpty)
+                                          ? AppColors.secondaryColorLight
+                                          : Colors.grey.shade300,
+                                  onPressed: () {
+                                  },
+                                  child: Icon(Icons.check, color: Colors.white),
+                                ),
+                              ),
                             ],
                           ),
                         ),
@@ -164,6 +202,25 @@ class _CreateTeamsScreenState extends State<CreateTeamsScreen> {
                                 nombre: _team2Player2Controller,
                                 hintText: 'Jugador 2',
                               ),
+                              const SizedBox(width: 20),
+                              SizedBox(
+                                height: 40,
+                                width: 40,
+                                child: FloatingActionButton(
+                                  backgroundColor:
+                                  (_team2Player1Controller
+                                      .text
+                                      .isNotEmpty &&
+                                      _team2Player2Controller
+                                          .text
+                                          .isNotEmpty)
+                                      ? AppColors.secondaryColorLight
+                                      : Colors.grey.shade300,
+                                  onPressed: () {
+                                  },
+                                  child: Icon(Icons.check, color: Colors.white),
+                                ),
+                              ),
                             ],
                           ),
                         ),
@@ -192,7 +249,7 @@ class _CreateTeamsScreenState extends State<CreateTeamsScreen> {
                   ),
                 ],
               ),
-              const SizedBox(height: 20,),
+              const SizedBox(height: 20),
               RadioListTile<GameSystem>(
                 hoverColor: Colors.transparent,
                 activeColor: AppColors.primaryColorLight,

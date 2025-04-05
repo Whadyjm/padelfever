@@ -33,6 +33,7 @@ class HomeScreen extends StatelessWidget {
           bottom: TabBar(
             indicatorSize: TabBarIndicatorSize.tab,
             indicator: BoxDecoration(
+              color: Colors.white24,
               borderRadius: const BorderRadius.only(
                 topRight: Radius.circular(40),
                 topLeft: Radius.circular(40),
