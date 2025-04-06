@@ -21,7 +21,14 @@ class AppText {
   static TextStyle smallTextStyle(Color textColor) => TextStyle(
     fontFamily: 'sf-pro-display',
     color: textColor,
-    fontSize: 16,
+    fontSize: 15,
+    fontWeight: FontWeight.w600,
+  );
+
+  static TextStyle verySmallTextStyle(Color textColor) => TextStyle(
+    fontFamily: 'sf-pro-display',
+    color: textColor,
+    fontSize: 10,
     fontWeight: FontWeight.w600,
   );
 }

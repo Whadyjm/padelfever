@@ -97,17 +97,17 @@ class HistoryScreen extends StatelessWidget {
                           children: [
                             Text(
                               '${match.team1.teamName} vs ${match.team2.teamName}',
-                              style: AppText.subtitleStyle(Colors.white),
+                              style: AppText.smallTextStyle(Colors.white),
                             ),
                             Text(
                               'Ganador: ${match.winner}',
-                              style: AppText.subtitleStyle(Colors.white),
+                              style: AppText.smallTextStyle(Colors.white),
                             ),
                           ],
                         ),
                         subtitle: Text(
                           '${match.team1TotalGames} - ${match.team2TotalGames} • ${match.date.toString().substring(0, 16)}',
-                          style: AppText.smallTextStyle(Colors.white),
+                          style: AppText.verySmallTextStyle(Colors.white),
                         ),
                       ),
                     );
