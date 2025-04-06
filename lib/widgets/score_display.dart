@@ -17,7 +17,13 @@ class ScoreDisplay extends StatelessWidget {
     required this.addPointTeam2,
   });
 
-  String _getScore(int points) {
+
+  String _getScore(int points, bool isTieBreak) {
+
+    if (isTieBreak) {
+      return points.toString();
+    }
+
     switch (points) {
       case 0:
         return "0";
@@ -34,15 +40,27 @@ class ScoreDisplay extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
+    final isTieBreak = gameSystem == GameSystem.tieBreak;
+
     return Padding(
       padding: const EdgeInsets.all(16),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
+          if (isTieBreak)
+            const Text(
+              'TIE BREAK',
+              style: TextStyle(
+                fontSize: 24,
+                fontWeight: FontWeight.bold,
+                color: Colors.red,
+              ),
+            ),
           GestureDetector(
             onTap: addPointTeam1,
             child: Text(
-              _getScore(team1Points),
+              _getScore(team1Points, isTieBreak),
               style: TextStyle(
                 fontSize: 80,
                 color: Colors.grey.shade800,
@@ -54,7 +72,7 @@ class ScoreDisplay extends StatelessWidget {
           GestureDetector(
             onTap: addPointTeam2,
             child: Text(
-              _getScore(team2Points),
+              _getScore(team2Points, isTieBreak),
               style: TextStyle(
                 fontSize: 80,
                 color: Colors.grey.shade800,

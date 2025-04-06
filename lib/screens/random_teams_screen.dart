@@ -86,12 +86,21 @@ class _RandomTeamsScreenState extends State<RandomTeamsScreen> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 SizedBox(
-                  width: MediaQuery.sizeOf(context).width - 100,
+                  width: MediaQuery.sizeOf(context).width - 120,
                   child: PlayersTextField(
                     nombre: _playerController,
                     hintText: 'Nombre del jugador',
                   ),
                 ),
+                _players.isEmpty
+                    ? const SizedBox.shrink()
+                    : Padding(
+                      padding: const EdgeInsets.only(right: 2),
+                      child: Text(
+                        '${_players.length}',
+                        style: AppText.smallTextStyle(Colors.grey.shade700),
+                      ),
+                    ),
                 FloatingActionButton(
                   mini: true,
                   elevation: 0,
@@ -105,8 +114,6 @@ class _RandomTeamsScreenState extends State<RandomTeamsScreen> {
                 ),
               ],
             ),
-            const SizedBox(height: 10),
-
             const SizedBox(height: 10),
             _players.isEmpty
                 ? Text(

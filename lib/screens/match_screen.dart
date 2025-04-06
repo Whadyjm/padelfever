@@ -147,6 +147,9 @@ class _MatchScreenState extends State<MatchScreen> {
     final matchProvider = Provider.of<MatchProvider>(context);
     final colorProvider = Provider.of<ColorsProvider>(context);
 
+    final bool isTieBreak =
+        _match.team1TotalGames == 6 && _match.team2TotalGames == 6;
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: AppColors.primaryColorLight,
@@ -274,7 +277,9 @@ class _MatchScreenState extends State<MatchScreen> {
                       children: [
                         Expanded(
                           child: InkWell(
-                            onTap: () => _addPoint(1, context),
+                            onTap: () {
+                              _addPoint(1, context);
+                            },
                             child: Container(
                               height: 200,
                               width: 200,
@@ -302,6 +307,20 @@ class _MatchScreenState extends State<MatchScreen> {
                       addPointTeam2: () => _addPoint(2, context),
                     ),
                   ],
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(16),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      isTieBreak
+                          ? Text(
+                            'Tie Break',
+                            style: AppText.titleStyle(Colors.redAccent),
+                          )
+                          : const SizedBox.shrink(),
+                    ],
+                  ),
                 ),
               ],
             ),
