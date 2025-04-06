@@ -141,9 +141,11 @@ class _MatchScreenState extends State<MatchScreen> {
 
   @override
   Widget build(BuildContext context) {
+    Game currentGame = _match.currentGame;
+    List team1Games = _match.team1Games;
+    List team2Games = _match.team2Games;
     final matchProvider = Provider.of<MatchProvider>(context);
     final colorProvider = Provider.of<ColorsProvider>(context);
-    final Color greyColor = Colors.grey.shade700;
 
     return Scaffold(
       appBar: AppBar(
@@ -155,6 +157,16 @@ class _MatchScreenState extends State<MatchScreen> {
         ),
         title: Text('Marcador', style: AppText.titleStyle(Colors.white)),
         actions: [
+          TextButton(
+            onPressed: () {
+              setState(() {
+                team1Games.clear();
+                team2Games.clear();
+                currentGame.reset();
+              });
+            },
+            child: Text('Reset', style: AppText.smallTextStyle(Colors.white)),
+          ),
           IconButton(
             onPressed:
                 () => Navigator.push(
@@ -194,15 +206,11 @@ class _MatchScreenState extends State<MatchScreen> {
                                 children: [
                                   Text(
                                     'Juegos: ${_match.team1TotalGames}',
-                                    style: AppText.smallTextStyle(
-                                      Colors.white,
-                                    ),
+                                    style: AppText.smallTextStyle(Colors.white),
                                   ),
                                   Text(
                                     _match.team1.teamName,
-                                    style: AppText.smallTextStyle(
-                                      Colors.white,
-                                    ),
+                                    style: AppText.smallTextStyle(Colors.white),
                                   ),
                                   Text(
                                     '${_match.team1.player1.name} - ${_match.team1.player2.name}',
@@ -238,15 +246,11 @@ class _MatchScreenState extends State<MatchScreen> {
                                 children: [
                                   Text(
                                     'Juegos: ${_match.team2TotalGames}',
-                                    style: AppText.smallTextStyle(
-                                      Colors.white,
-                                    ),
+                                    style: AppText.smallTextStyle(Colors.white),
                                   ),
                                   Text(
                                     _match.team2.teamName,
-                                    style: AppText.smallTextStyle(
-                                      Colors.white,
-                                    ),
+                                    style: AppText.smallTextStyle(Colors.white),
                                   ),
                                   Text(
                                     '${_match.team2.player1.name} - ${_match.team2.player2.name}',
