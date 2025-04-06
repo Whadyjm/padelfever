@@ -1,6 +1,7 @@
 import 'package:confetti/confetti.dart';
 import 'package:flutter/material.dart';
 import 'package:padelpoint/models/match.dart';
+import 'package:padelpoint/providers/colors_provider.dart';
 import 'package:padelpoint/theme/colors.dart';
 import 'package:provider/provider.dart';
 import '../models/game.dart';
@@ -141,6 +142,7 @@ class _MatchScreenState extends State<MatchScreen> {
   @override
   Widget build(BuildContext context) {
     final matchProvider = Provider.of<MatchProvider>(context);
+    final colorProvider = Provider.of<ColorsProvider>(context);
     final Color greyColor = Colors.grey.shade700;
 
     return Scaffold(
@@ -175,29 +177,41 @@ class _MatchScreenState extends State<MatchScreen> {
                       child: Container(
                         height: 100,
                         decoration: BoxDecoration(
-                          color: AppColors.primaryColorLight,
+                          color: colorProvider.team1Color,
                         ),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceAround,
                           children: [
-                            Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Text(
-                                  'Juegos: ${_match.team1TotalGames}',
-                                  style: AppText.smallTextStyle(Colors.white),
-                                ),
-                                Text(
-                                  _match.team1.teamName,
-                                  style: AppText.smallTextStyle(Colors.white),
-                                ),
-                                Text(
-                                  '${_match.team1.player1.name} - ${_match.team1.player2.name}',
-                                  style: AppText.verySmallTextStyle(
-                                    Colors.white,
+                            Container(
+                              height: 80,
+                              width: 180,
+                              decoration: BoxDecoration(
+                                color: Colors.white38,
+                                borderRadius: BorderRadius.circular(12),
+                              ),
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Text(
+                                    'Juegos: ${_match.team1TotalGames}',
+                                    style: AppText.smallTextStyle(
+                                      Colors.white,
+                                    ),
                                   ),
-                                ),
-                              ],
+                                  Text(
+                                    _match.team1.teamName,
+                                    style: AppText.smallTextStyle(
+                                      Colors.white,
+                                    ),
+                                  ),
+                                  Text(
+                                    '${_match.team1.player1.name} - ${_match.team1.player2.name}',
+                                    style: AppText.verySmallTextStyle(
+                                      Colors.white,
+                                    ),
+                                  ),
+                                ],
+                              ),
                             ),
                           ],
                         ),
@@ -207,29 +221,41 @@ class _MatchScreenState extends State<MatchScreen> {
                       child: Container(
                         height: 100,
                         decoration: BoxDecoration(
-                          color: AppColors.secondaryColorLight,
+                          color: colorProvider.team2Color,
                         ),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceAround,
                           children: [
-                            Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Text(
-                                  'Juegos: ${_match.team2TotalGames}',
-                                  style: AppText.smallTextStyle(Colors.white),
-                                ),
-                                Text(
-                                  _match.team2.teamName,
-                                  style: AppText.smallTextStyle(Colors.white),
-                                ),
-                                Text(
-                                  '${_match.team2.player1.name} - ${_match.team2.player2.name}',
-                                  style: AppText.verySmallTextStyle(
-                                    Colors.white,
+                            Container(
+                              height: 80,
+                              width: 180,
+                              decoration: BoxDecoration(
+                                color: Colors.white38,
+                                borderRadius: BorderRadius.circular(12),
+                              ),
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Text(
+                                    'Juegos: ${_match.team2TotalGames}',
+                                    style: AppText.smallTextStyle(
+                                      Colors.white,
+                                    ),
                                   ),
-                                ),
-                              ],
+                                  Text(
+                                    _match.team2.teamName,
+                                    style: AppText.smallTextStyle(
+                                      Colors.white,
+                                    ),
+                                  ),
+                                  Text(
+                                    '${_match.team2.player1.name} - ${_match.team2.player2.name}',
+                                    style: AppText.verySmallTextStyle(
+                                      Colors.white,
+                                    ),
+                                  ),
+                                ],
+                              ),
                             ),
                           ],
                         ),
@@ -248,7 +274,7 @@ class _MatchScreenState extends State<MatchScreen> {
                             child: Container(
                               height: 200,
                               width: 200,
-                              color: Colors.blue.shade300,
+                              color: colorProvider.team1Color.withAlpha(80),
                             ),
                           ),
                         ),
@@ -258,7 +284,7 @@ class _MatchScreenState extends State<MatchScreen> {
                             child: Container(
                               height: 200,
                               width: 200,
-                              color: Colors.green.shade300,
+                              color: colorProvider.team2Color.withAlpha(80),
                             ),
                           ),
                         ),

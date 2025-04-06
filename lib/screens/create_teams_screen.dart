@@ -9,6 +9,7 @@ import '../models/game.dart';
 import '../models/player.dart' show Player;
 import '../models/team.dart' show Team;
 import '../providers/btn_provider.dart';
+import '../providers/colors_provider.dart';
 import '../providers/players_provider.dart';
 import '../theme/text.dart';
 import '../widgets/appBtn.dart';
@@ -94,36 +95,6 @@ class _CreateTeamsScreenState extends State<CreateTeamsScreen> {
     _team2Player1Controller.dispose();
     _team2Player2Controller.dispose();
     super.dispose();
-  }
-
-  void _startMatch() {
-    final team1 = Team(
-      id: DateTime.now().toString(),
-      name: _team1NameController.text,
-      player1: Player(id: '1', name: _team1Player1Controller.text),
-      player2: Player(id: '2', name: _team1Player2Controller.text),
-      color: _team1Color,
-    );
-
-    final team2 = Team(
-      id: DateTime.now().toString() + '2',
-      name: _team2NameController.text,
-      player1: Player(id: '3', name: _team2Player1Controller.text),
-      player2: Player(id: '4', name: _team2Player2Controller.text),
-      color: _team2Color,
-    );
-
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder:
-            (ctx) => MatchScreen(
-              team1: team1,
-              team2: team2,
-              gameSystem: _gameSystem,
-            ),
-      ),
-    );
   }
 
   void _pickColorTeam1(Color currentColor, onColorChanged) {
@@ -239,6 +210,7 @@ class _CreateTeamsScreenState extends State<CreateTeamsScreen> {
   @override
   Widget build(BuildContext context) {
     final btnProvider = Provider.of<BtnProvider>(context);
+    final colorsProvider = Provider.of<ColorsProvider>(context);
 
     return Scaffold(
       body: SingleChildScrollView(
@@ -444,7 +416,39 @@ class _CreateTeamsScreenState extends State<CreateTeamsScreen> {
                             ? true
                             : false,
                     text: 'Comenzar partido',
-                    onPressed: _startMatch,
+                    onPressed: (){
+
+                      colorsProvider.team1Color = _team1Color;
+                      colorsProvider.team2Color = _team2Color;
+
+                      final team1 = Team(
+                        id: DateTime.now().toString(),
+                        name: _team1NameController.text,
+                        player1: Player(id: '1', name: _team1Player1Controller.text),
+                        player2: Player(id: '2', name: _team1Player2Controller.text),
+                        color: _team1Color,
+                      );
+
+                      final team2 = Team(
+                        id: DateTime.now().toString() + '2',
+                        name: _team2NameController.text,
+                        player1: Player(id: '3', name: _team2Player1Controller.text),
+                        player2: Player(id: '4', name: _team2Player2Controller.text),
+                        color: _team2Color,
+                      );
+
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder:
+                              (ctx) => MatchScreen(
+                            team1: team1,
+                            team2: team2,
+                            gameSystem: _gameSystem,
+                          ),
+                        ),
+                      );
+                    },
                   ),
                 ],
               ),
