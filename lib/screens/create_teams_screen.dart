@@ -132,7 +132,10 @@ class _CreateTeamsScreenState extends State<CreateTeamsScreen> {
       builder: (context) {
         return AlertDialog(
           backgroundColor: Colors.white,
-          title: Text('Elige un color', style: AppText.subtitleStyle(Colors.grey.shade700),),
+          title: Text(
+            'Elige un color',
+            style: AppText.subtitleStyle(Colors.grey.shade700),
+          ),
           content: SingleChildScrollView(
             child: BlockPicker(
               pickerColor: currentColor,
@@ -184,7 +187,10 @@ class _CreateTeamsScreenState extends State<CreateTeamsScreen> {
       builder: (context) {
         return AlertDialog(
           backgroundColor: Colors.white,
-          title: Text('Elige un color', style: AppText.subtitleStyle(Colors.grey.shade700),),
+          title: Text(
+            'Elige un color',
+            style: AppText.subtitleStyle(Colors.grey.shade700),
+          ),
           content: SingleChildScrollView(
             child: BlockPicker(
               pickerColor: currentColor,
@@ -246,6 +252,10 @@ class _CreateTeamsScreenState extends State<CreateTeamsScreen> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
+                  TeamNameTextField(
+                    controller: _team1NameController,
+                    hintText: 'Ingresa el nombre del equipo A (opcional)',
+                  ),
                   GestureDetector(
                     onTap: () {
                       _pickColorTeam1(_team1Color, (color) {
@@ -258,64 +268,24 @@ class _CreateTeamsScreenState extends State<CreateTeamsScreen> {
                       height: 30,
                       width: 50,
                       decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(18),
-                          color: _team1Color,
+                        borderRadius: BorderRadius.circular(18),
+                        color: _team1Color,
                       ),
                     ),
                   ),
-                  Column(
-                    children: [
-                      TeamNameTextField(
-                        controller: _team1NameController,
-                        hintText: 'Ingresa el nombre del equipo A (opcional)',
-                      ),
-                      Visibility(
-                        visible: btnProvider.showTextField1 ? true : false,
-                        child: FadeInRight(
-                          duration: const Duration(milliseconds: 800),
-                          animate: true,
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Column(
-                                children: [
-                                  PlayersTextField(
-                                    nombre: _team1Player1Controller,
-                                    hintText: 'Jugador 1',
-                                  ),
-                                  const SizedBox(height: 20,),
-                                  PlayersTextField(
-                                    nombre: _team1Player2Controller,
-                                    hintText: 'Jugador 2',
-                                  ),
-                                ],
-                              ),
-                              SizedBox(
-                                width: MediaQuery.of(context).size.width - 300,
-                              ),
-                              SizedBox(
-                                height: 40,
-                                width: 40,
-                                child: FloatingActionButton(
-                                  elevation: 0,
-                                  backgroundColor:
-                                      (_team1Player1Controller
-                                                  .text
-                                                  .isNotEmpty &&
-                                              _team1Player2Controller
-                                                  .text
-                                                  .isNotEmpty)
-                                          ? AppColors.secondaryColorLight
-                                          : Colors.grey.shade300,
-                                  onPressed: () {},
-                                  child: Icon(Icons.check, color: Colors.white),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                    ],
+                  SizedBox(
+                    height: 30,
+                    width: 50,
+                    child: FloatingActionButton(
+                      elevation: 0,
+                      backgroundColor:
+                          (_team1Player1Controller.text.isNotEmpty &&
+                                  _team1Player2Controller.text.isNotEmpty)
+                              ? AppColors.secondaryColorLight
+                              : Colors.grey.shade300,
+                      onPressed: () {},
+                      child: Icon(Icons.check, color: Colors.white),
+                    ),
                   ),
                   AddPlayersSection(
                     controller1: _team1Player1Controller,
@@ -325,14 +295,39 @@ class _CreateTeamsScreenState extends State<CreateTeamsScreen> {
                   ),
                 ],
               ),
+              Visibility(
+                visible: btnProvider.showTextField1,
+                child: FadeInRight(
+                  duration: const Duration(milliseconds: 800),
+                  animate: true,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      PlayersTextField(
+                        nombre: _team1Player1Controller,
+                        hintText: 'Jugador 1',
+                      ),
+                      const SizedBox(height: 20),
+                      PlayersTextField(
+                        nombre: _team1Player2Controller,
+                        hintText: 'Jugador 2',
+                      ),
+                    ],
+                  ),
+                ),
+              ),
               const SizedBox(height: 30),
               // Team 2
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
+                  TeamNameTextField(
+                    controller: _team2NameController,
+                    hintText: 'Ingresa el nombre del equipo B (opcional)',
+                  ),
                   GestureDetector(
                     onTap: () {
-                      _pickColorTeam2(_team1Color, (color) {
+                      _pickColorTeam2(_team2Color, (color) {
                         setState(() {
                           _team2Color = color;
                         });
@@ -347,59 +342,19 @@ class _CreateTeamsScreenState extends State<CreateTeamsScreen> {
                       ),
                     ),
                   ),
-                  Column(
-                    children: [
-                      TeamNameTextField(
-                        controller: _team2NameController,
-                        hintText: 'Ingresa el nombre del equipo B (opcional)',
-                      ),
-                      Visibility(
-                        visible: btnProvider.showTextField2 ? true : false,
-                        child: FadeInRight(
-                          duration: const Duration(milliseconds: 800),
-                          animate: true,
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Column(
-                                children: [
-                                  PlayersTextField(
-                                    nombre: _team2Player1Controller,
-                                    hintText: 'Jugador 1',
-                                  ),
-                                  const SizedBox(height: 20,),
-                                  PlayersTextField(
-                                    nombre: _team2Player2Controller,
-                                    hintText: 'Jugador 2',
-                                  ),
-                                ],
-                              ),
-                              SizedBox(
-                                width: MediaQuery.of(context).size.width - 300,
-                              ),
-                              SizedBox(
-                                height: 40,
-                                width: 40,
-                                child: FloatingActionButton(
-                                  elevation: 0,
-                                  backgroundColor:
-                                      (_team2Player1Controller
-                                                  .text
-                                                  .isNotEmpty &&
-                                              _team2Player2Controller
-                                                  .text
-                                                  .isNotEmpty)
-                                          ? AppColors.secondaryColorLight
-                                          : Colors.grey.shade300,
-                                  onPressed: () {},
-                                  child: Icon(Icons.check, color: Colors.white),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                    ],
+                  SizedBox(
+                    height: 30,
+                    width: 50,
+                    child: FloatingActionButton(
+                      elevation: 0,
+                      backgroundColor:
+                          (_team2Player1Controller.text.isNotEmpty &&
+                                  _team2Player2Controller.text.isNotEmpty)
+                              ? AppColors.secondaryColorLight
+                              : Colors.grey.shade300,
+                      onPressed: () {},
+                      child: Icon(Icons.check, color: Colors.white),
+                    ),
                   ),
                   AddPlayersSection(
                     controller1: _team2Player1Controller,
@@ -408,6 +363,27 @@ class _CreateTeamsScreenState extends State<CreateTeamsScreen> {
                     toggleTextfield: btnProvider.toggleTextField2,
                   ),
                 ],
+              ),
+              Visibility(
+                visible: btnProvider.showTextField2,
+                child: FadeInRight(
+                  duration: const Duration(milliseconds: 800),
+                  animate: true,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      PlayersTextField(
+                        nombre: _team2Player1Controller,
+                        hintText: 'Jugador 1',
+                      ),
+                      const SizedBox(height: 20),
+                      PlayersTextField(
+                        nombre: _team2Player2Controller,
+                        hintText: 'Jugador 2',
+                      ),
+                    ],
+                  ),
+                ),
               ),
               const SizedBox(height: 20),
               // Game system
@@ -478,5 +454,4 @@ class _CreateTeamsScreenState extends State<CreateTeamsScreen> {
       ),
     );
   }
-
 }

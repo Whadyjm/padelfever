@@ -3,7 +3,11 @@ import 'package:flutter/material.dart';
 import '../theme/text.dart';
 
 class TeamNameTextField extends StatelessWidget {
-  TeamNameTextField({super.key, required this.controller, required this.hintText});
+  TeamNameTextField({
+    super.key,
+    required this.controller,
+    required this.hintText,
+  });
 
   TextEditingController controller = TextEditingController();
   String hintText;
@@ -17,8 +21,7 @@ class TeamNameTextField extends StatelessWidget {
         decoration: InputDecoration(
           counterText: '',
           border: InputBorder.none,
-          hintText:
-          hintText,
+          hintText: hintText,
         ),
         style: AppText.subtitleStyle(Colors.grey.shade700),
         onChanged: (text) {

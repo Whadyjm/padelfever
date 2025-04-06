@@ -16,25 +16,15 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        ChangeNotifierProvider(
-          create: (ctx) => MatchProvider(),
-        ),
-        ChangeNotifierProvider(
-          create: (ctx) => BtnProvider(),
-        ),
-        ChangeNotifierProvider(
-          create: (ctx) => PlayersProvider(),
-        ),
+        ChangeNotifierProvider(create: (ctx) => MatchProvider()),
+        ChangeNotifierProvider(create: (ctx) => BtnProvider()),
+        ChangeNotifierProvider(create: (ctx) => PlayersProvider()),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
-        theme: ThemeData(
-          primarySwatch: Colors.blue,
-        ),
+        theme: ThemeData(primarySwatch: Colors.blue),
         home: const HomeScreen(),
-        routes: {
-          HomeScreen.routeName: (ctx) => const HomeScreen(),
-        },
+        routes: {HomeScreen.routeName: (ctx) => const HomeScreen()},
       ),
     );
   }

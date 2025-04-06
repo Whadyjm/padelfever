@@ -25,7 +25,7 @@ class HomeScreen extends StatelessWidget {
                     context,
                     MaterialPageRoute(builder: (context) => HistoryScreen()),
                   ),
-              icon: Icon(Icons.history, color: Colors.white, size: 30,),
+              icon: Icon(Icons.history, color: Colors.white, size: 30),
             ),
           ],
           backgroundColor: AppColors.appBarColorLight,

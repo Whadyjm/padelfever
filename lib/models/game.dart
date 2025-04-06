@@ -28,7 +28,8 @@ class Game {
       if (team2Points >= 4 && team2Points >= team1Points + 2) {
         return 2;
       }
-    } else { // goldenPoint
+    } else {
+      // goldenPoint
       if (team1Points >= 4) return 1;
       if (team2Points >= 4) return 2;
     }
@@ -37,11 +38,16 @@ class Game {
 
   String getScore(int points) {
     switch (points) {
-      case 0: return "0";
-      case 1: return "15";
-      case 2: return "30";
-      case 3: return "40";
-      default: return "AD";
+      case 0:
+        return "0";
+      case 1:
+        return "15";
+      case 2:
+        return "30";
+      case 3:
+        return "40";
+      default:
+        return "AD";
     }
   }
 }

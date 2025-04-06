@@ -118,9 +118,17 @@ class _RandomTeamsScreenState extends State<RandomTeamsScreen> {
                       _players
                           .map(
                             (player) => ListTile(
-                              title: Text(player.name, style: AppText.smallTextStyle(Colors.grey.shade700),),
+                              title: Text(
+                                player.name,
+                                style: AppText.smallTextStyle(
+                                  Colors.grey.shade700,
+                                ),
+                              ),
                               trailing: IconButton(
-                                icon: const Icon(Icons.remove, color: Colors.redAccent,),
+                                icon: const Icon(
+                                  Icons.remove,
+                                  color: Colors.redAccent,
+                                ),
                                 onPressed: () => _removePlayer(player),
                               ),
                             ),

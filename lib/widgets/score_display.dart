@@ -12,16 +12,23 @@ class ScoreDisplay extends StatelessWidget {
     super.key,
     required this.team1Points,
     required this.team2Points,
-    required this.gameSystem, required this.addPointTeam1, required this.addPointTeam2,
+    required this.gameSystem,
+    required this.addPointTeam1,
+    required this.addPointTeam2,
   });
 
   String _getScore(int points) {
     switch (points) {
-      case 0: return "0";
-      case 1: return "15";
-      case 2: return "30";
-      case 3: return "40";
-      default: return "AD";
+      case 0:
+        return "0";
+      case 1:
+        return "15";
+      case 2:
+        return "30";
+      case 3:
+        return "40";
+      default:
+        return "AD";
     }
   }
 
@@ -36,14 +43,24 @@ class ScoreDisplay extends StatelessWidget {
             onTap: addPointTeam1,
             child: Text(
               _getScore(team1Points),
-              style: TextStyle(fontSize: 80, color: Colors.grey.shade800, fontWeight: FontWeight.bold, fontFamily: 'sf-pro-display'),
+              style: TextStyle(
+                fontSize: 80,
+                color: Colors.grey.shade800,
+                fontWeight: FontWeight.bold,
+                fontFamily: 'sf-pro-display',
+              ),
             ),
           ),
           GestureDetector(
             onTap: addPointTeam2,
             child: Text(
               _getScore(team2Points),
-              style: TextStyle(fontSize: 80, color: Colors.grey.shade800, fontWeight: FontWeight.bold, fontFamily: 'sf-pro-display'),
+              style: TextStyle(
+                fontSize: 80,
+                color: Colors.grey.shade800,
+                fontWeight: FontWeight.bold,
+                fontFamily: 'sf-pro-display',
+              ),
             ),
           ),
         ],

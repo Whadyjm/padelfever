@@ -77,7 +77,7 @@ class HistoryScreen extends StatelessWidget {
         ),
         actions: [
           IconButton(
-            onPressed: () => matches.isEmpty ? null:_clearConfirmation(),
+            onPressed: () => matches.isEmpty ? null : _clearConfirmation(),
             icon: Icon(Icons.delete, color: Colors.white),
           ),
         ],

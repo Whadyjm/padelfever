@@ -21,19 +21,18 @@ class AddPlayersSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     return Center(
       child: Stack(
         children: [
           Visibility(
             visible: showTextField ? false : true,
             child: SizedBox(
-              height: 50,
+              height: 30,
               width: 50,
               child: FloatingActionButton.extended(
                 elevation: 0,
                 onPressed: toggleTextfield,
-                label: Icon(Icons.add_rounded, color: Colors.white, size: 30),
+                label: Icon(Icons.add_rounded, color: Colors.white, size: 25),
                 backgroundColor: AppColors.primaryColorLight,
               ),
             ),

@@ -44,7 +44,8 @@ class _MatchScreenState extends State<MatchScreen> {
     setState(() {
       _match.currentGame.addPoint(team);
       final winner = _match.currentGame.getWinner();
-      final confettiController = Provider.of<MatchProvider>(context, listen: false).controller;
+      final confettiController =
+          Provider.of<MatchProvider>(context, listen: false).controller;
       if (winner != null) {
         confettiController.play();
         _match.addGame(winner);
@@ -78,7 +79,11 @@ class _MatchScreenState extends State<MatchScreen> {
                   if (_match.winner.isNotEmpty) {
                     _showMatchWinnerDialog();
                   }
-                  final confettiController = Provider.of<MatchProvider>(context, listen: false).controller;
+                  final confettiController =
+                      Provider.of<MatchProvider>(
+                        context,
+                        listen: false,
+                      ).controller;
                   confettiController.stop();
                 },
                 child: Center(
@@ -99,7 +104,6 @@ class _MatchScreenState extends State<MatchScreen> {
       barrierDismissible: false,
       builder:
           (ctx) => AlertDialog(
-
             backgroundColor: Colors.white,
             title: Center(
               child: Text(
@@ -189,7 +193,9 @@ class _MatchScreenState extends State<MatchScreen> {
                                 ),
                                 Text(
                                   '${_match.team1.player1.name} - ${_match.team1.player2.name}',
-                                  style: AppText.verySmallTextStyle(Colors.white),
+                                  style: AppText.verySmallTextStyle(
+                                    Colors.white,
+                                  ),
                                 ),
                               ],
                             ),
@@ -219,7 +225,9 @@ class _MatchScreenState extends State<MatchScreen> {
                                 ),
                                 Text(
                                   '${_match.team2.player1.name} - ${_match.team2.player2.name}',
-                                  style: AppText.verySmallTextStyle(Colors.white),
+                                  style: AppText.verySmallTextStyle(
+                                    Colors.white,
+                                  ),
                                 ),
                               ],
                             ),
@@ -273,8 +281,9 @@ class _MatchScreenState extends State<MatchScreen> {
             emissionFrequency: 0.25,
             confettiController: matchProvider.controller,
             shouldLoop: true,
-            blastDirectionality: BlastDirectionality.explosive,),
-        ]
+            blastDirectionality: BlastDirectionality.explosive,
+          ),
+        ],
       ),
     );
   }

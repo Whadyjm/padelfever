@@ -17,8 +17,8 @@ class Match {
     required this.team1,
     required this.team2,
     required this.gameSystem,
-  })  : date = DateTime.now(),
-        currentGame = Game(system: gameSystem);
+  }) : date = DateTime.now(),
+       currentGame = Game(system: gameSystem);
 
   void addGame(int winner) {
     if (winner == 1) {
