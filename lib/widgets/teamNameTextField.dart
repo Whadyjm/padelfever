@@ -10,10 +10,12 @@ class TeamNameTextField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      width: MediaQuery.of(context).size.width - 100,
+      width: MediaQuery.of(context).size.width - 200,
       child: TextField(
+        maxLength: 20,
         controller: controller,
         decoration: InputDecoration(
+          counterText: '',
           border: InputBorder.none,
           hintText:
           hintText,

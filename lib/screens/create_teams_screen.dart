@@ -1,5 +1,6 @@
 import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 import 'package:padelpoint/theme/colors.dart';
 import 'package:padelpoint/widgets/PlayersTextField.dart';
 import 'package:padelpoint/widgets/addPlayersSection.dart';
@@ -33,6 +34,8 @@ class _CreateTeamsScreenState extends State<CreateTeamsScreen> {
   bool team1Ready = false;
   bool team2Ready = false;
   GameSystem _gameSystem = GameSystem.advantage;
+  Color _team1Color = Colors.blue;
+  Color _team2Color = Colors.green;
 
   @override
   void initState() {
@@ -99,6 +102,7 @@ class _CreateTeamsScreenState extends State<CreateTeamsScreen> {
       name: _team1NameController.text,
       player1: Player(id: '1', name: _team1Player1Controller.text),
       player2: Player(id: '2', name: _team1Player2Controller.text),
+      color: _team1Color,
     );
 
     final team2 = Team(
@@ -106,6 +110,7 @@ class _CreateTeamsScreenState extends State<CreateTeamsScreen> {
       name: _team2NameController.text,
       player1: Player(id: '3', name: _team2Player1Controller.text),
       player2: Player(id: '4', name: _team2Player2Controller.text),
+      color: _team2Color,
     );
 
     Navigator.push(
@@ -118,6 +123,110 @@ class _CreateTeamsScreenState extends State<CreateTeamsScreen> {
               gameSystem: _gameSystem,
             ),
       ),
+    );
+  }
+
+  void _pickColorTeam1(Color currentColor, onColorChanged) {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          backgroundColor: Colors.white,
+          title: Text('Elige un color', style: AppText.subtitleStyle(Colors.grey.shade700),),
+          content: SingleChildScrollView(
+            child: BlockPicker(
+              pickerColor: currentColor,
+              onColorChanged: onColorChanged,
+              availableColors: [
+                Colors.blue,
+                Colors.red,
+                Colors.green,
+                Colors.yellow,
+                Colors.purple,
+                Colors.orange,
+                Colors.teal,
+                Colors.brown,
+                Colors.grey,
+                Colors.pink,
+                Colors.cyan,
+                Colors.lime,
+                Colors.indigo,
+                Colors.amber,
+                Colors.deepOrange,
+                Colors.lightGreen,
+                Colors.deepPurple,
+                Colors.lightBlue,
+                Colors.black,
+              ],
+            ),
+          ),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: Center(
+                child: Text(
+                  'Seleccionar',
+                  style: AppText.subtitleStyle(Colors.blue),
+                ),
+              ),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  void _pickColorTeam2(Color currentColor, onColorChanged) {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          backgroundColor: Colors.white,
+          title: Text('Elige un color', style: AppText.subtitleStyle(Colors.grey.shade700),),
+          content: SingleChildScrollView(
+            child: BlockPicker(
+              pickerColor: currentColor,
+              onColorChanged: onColorChanged,
+              availableColors: [
+                Colors.blue,
+                Colors.red,
+                Colors.green,
+                Colors.yellow,
+                Colors.purple,
+                Colors.orange,
+                Colors.teal,
+                Colors.brown,
+                Colors.grey,
+                Colors.pink,
+                Colors.cyan,
+                Colors.lime,
+                Colors.indigo,
+                Colors.amber,
+                Colors.deepOrange,
+                Colors.lightGreen,
+                Colors.deepPurple,
+                Colors.lightBlue,
+                Colors.black,
+              ],
+            ),
+          ),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: Center(
+                child: Text(
+                  'Seleccionar',
+                  style: AppText.subtitleStyle(Colors.blue),
+                ),
+              ),
+            ),
+          ],
+        );
+      },
     );
   }
 
@@ -137,6 +246,23 @@ class _CreateTeamsScreenState extends State<CreateTeamsScreen> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
+                  GestureDetector(
+                    onTap: () {
+                      _pickColorTeam1(_team1Color, (color) {
+                        setState(() {
+                          _team1Color = color;
+                        });
+                      });
+                    },
+                    child: Container(
+                      height: 30,
+                      width: 50,
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(18),
+                          color: _team1Color,
+                      ),
+                    ),
+                  ),
                   Column(
                     children: [
                       TeamNameTextField(
@@ -204,6 +330,23 @@ class _CreateTeamsScreenState extends State<CreateTeamsScreen> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
+                  GestureDetector(
+                    onTap: () {
+                      _pickColorTeam2(_team1Color, (color) {
+                        setState(() {
+                          _team2Color = color;
+                        });
+                      });
+                    },
+                    child: Container(
+                      height: 30,
+                      width: 50,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(18),
+                        color: _team2Color,
+                      ),
+                    ),
+                  ),
                   Column(
                     children: [
                       TeamNameTextField(
@@ -335,4 +478,5 @@ class _CreateTeamsScreenState extends State<CreateTeamsScreen> {
       ),
     );
   }
+
 }

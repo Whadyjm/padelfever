@@ -54,12 +54,14 @@ class MatchProvider with ChangeNotifier {
         name: '',
         player1: _players[0],
         player2: _players[1],
+        color: Colors.blue,
       ),
       Team(
         id: DateTime.now().toString() + '2',
         name: '',
         player1: _players[2],
         player2: _players[3],
+        color: Colors.green,
       ),
     ];
   }

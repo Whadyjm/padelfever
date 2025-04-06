@@ -11,12 +11,14 @@ class PlayersTextField extends StatelessWidget {
   Widget build(BuildContext context) {
     return SizedBox(
         height: 50,
-        width: 200,
+        width: 100,
         child: TextFormField(
+          maxLength: 12,
           style: AppText.smallTextStyle(Colors.grey.shade700),
           controller: nombre,
           cursorColor: Colors.blue,
           decoration: InputDecoration(
+            counterText: "",
             hintText: hintText,
             hintStyle: AppText.smallTextStyle(Colors.grey.shade500),
             filled: true,
