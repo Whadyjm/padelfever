@@ -13,5 +13,5 @@ class Team {
     required this.player2,
   });
 
-  String get teamName => name.isEmpty ? '${player1.name} & ${player2.name}' : name;
+  String get teamName => name.isEmpty ? '${player1.name} - ${player2.name}' : name;
 }

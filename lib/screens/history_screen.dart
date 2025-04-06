@@ -92,17 +92,22 @@ class HistoryScreen extends StatelessWidget {
                         vertical: 8,
                       ),
                       child: ListTile(
-                        title: Text(
-                          '${match.team1.teamName} vs ${match.team2.teamName}',
-                          style: AppText.subtitleStyle(Colors.white),
+                        title: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              '${match.team1.teamName} vs ${match.team2.teamName}',
+                              style: AppText.subtitleStyle(Colors.white),
+                            ),
+                            Text(
+                              'Ganador: ${match.winner}',
+                              style: AppText.subtitleStyle(Colors.white),
+                            ),
+                          ],
                         ),
                         subtitle: Text(
                           '${match.team1TotalGames} - ${match.team2TotalGames} • ${match.date.toString().substring(0, 16)}',
                           style: AppText.smallTextStyle(Colors.white),
-                        ),
-                        trailing: Text(
-                          'Ganador: ${match.winner}',
-                          style: AppText.subtitleStyle(Colors.white),
                         ),
                       ),
                     );

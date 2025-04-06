@@ -57,6 +57,7 @@ class _MatchScreenState extends State<MatchScreen> {
     final team = winner == 1 ? _match.team1 : _match.team2;
     showDialog(
       context: context,
+      barrierDismissible: false,
       builder:
           (ctx) => AlertDialog(
             backgroundColor: Colors.white,
@@ -98,6 +99,7 @@ class _MatchScreenState extends State<MatchScreen> {
       barrierDismissible: false,
       builder:
           (ctx) => AlertDialog(
+
             backgroundColor: Colors.white,
             title: Center(
               child: Text(
@@ -162,16 +164,22 @@ class _MatchScreenState extends State<MatchScreen> {
         children: [
           Column(
             children: [
-              Padding(
-                padding: const EdgeInsets.all(50),
+              Container(
+                height: 200,
+                width: MediaQuery.sizeOf(context).width,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.all(Radius.circular(12)),
+                  color: Colors.grey.shade300,
+                ),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
                     Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Text(
                           _match.team1.teamName,
-                          style: AppText.titleStyle(greyColor),
+                          style: AppText.subtitleStyle(greyColor),
                         ),
                         Text(
                           '${_match.team1.player1.name} - ${_match.team1.player2.name}',
@@ -189,10 +197,11 @@ class _MatchScreenState extends State<MatchScreen> {
                       ),
                     ),
                     Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Text(
                           _match.team2.teamName,
-                          style: AppText.titleStyle(greyColor),
+                          style: AppText.subtitleStyle(greyColor),
                         ),
                         Text(
                           '${_match.team2.player1.name} - ${_match.team2.player2.name}',
@@ -206,7 +215,7 @@ class _MatchScreenState extends State<MatchScreen> {
 
               // Games score
               Padding(
-                padding: const EdgeInsets.all(50),
+                padding: const EdgeInsets.all(20),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [

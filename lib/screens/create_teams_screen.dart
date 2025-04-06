@@ -151,15 +151,22 @@ class _CreateTeamsScreenState extends State<CreateTeamsScreen> {
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              PlayersTextField(
-                                nombre: _team1Player1Controller,
-                                hintText: 'Jugador 1',
+                              Column(
+                                children: [
+                                  PlayersTextField(
+                                    nombre: _team1Player1Controller,
+                                    hintText: 'Jugador 1',
+                                  ),
+                                  const SizedBox(height: 20,),
+                                  PlayersTextField(
+                                    nombre: _team1Player2Controller,
+                                    hintText: 'Jugador 2',
+                                  ),
+                                ],
                               ),
-                              PlayersTextField(
-                                nombre: _team1Player2Controller,
-                                hintText: 'Jugador 2',
+                              SizedBox(
+                                width: MediaQuery.of(context).size.width - 300,
                               ),
-                              const SizedBox(width: 20),
                               SizedBox(
                                 height: 40,
                                 width: 40,
@@ -211,15 +218,22 @@ class _CreateTeamsScreenState extends State<CreateTeamsScreen> {
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              PlayersTextField(
-                                nombre: _team2Player1Controller,
-                                hintText: 'Jugador 1',
+                              Column(
+                                children: [
+                                  PlayersTextField(
+                                    nombre: _team2Player1Controller,
+                                    hintText: 'Jugador 1',
+                                  ),
+                                  const SizedBox(height: 20,),
+                                  PlayersTextField(
+                                    nombre: _team2Player2Controller,
+                                    hintText: 'Jugador 2',
+                                  ),
+                                ],
                               ),
-                              PlayersTextField(
-                                nombre: _team2Player2Controller,
-                                hintText: 'Jugador 2',
+                              SizedBox(
+                                width: MediaQuery.of(context).size.width - 300,
                               ),
-                              const SizedBox(width: 20),
                               SizedBox(
                                 height: 40,
                                 width: 40,
