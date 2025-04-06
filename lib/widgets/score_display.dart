@@ -1,16 +1,18 @@
 import 'package:flutter/material.dart';
 import '../models/game.dart';
+import '../theme/text.dart';
 
 class ScoreDisplay extends StatelessWidget {
   final int team1Points;
   final int team2Points;
   final GameSystem gameSystem;
-
+  final VoidCallback addPointTeam1;
+  final VoidCallback addPointTeam2;
   const ScoreDisplay({
     super.key,
     required this.team1Points,
     required this.team2Points,
-    required this.gameSystem,
+    required this.gameSystem, required this.addPointTeam1, required this.addPointTeam2,
   });
 
   String _getScore(int points) {
@@ -30,20 +32,19 @@ class ScoreDisplay extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
-          Text(
-            _getScore(team1Points),
-            style: const TextStyle(fontSize: 40, fontWeight: FontWeight.bold),
-          ),
-          Text(
-            'VS',
-            style: TextStyle(
-              fontSize: 20,
-              color: Colors.grey[600],
+          GestureDetector(
+            onTap: addPointTeam1,
+            child: Text(
+              _getScore(team1Points),
+              style: TextStyle(fontSize: 80, color: Colors.grey.shade800, fontWeight: FontWeight.bold, fontFamily: 'sf-pro-display'),
             ),
           ),
-          Text(
-            _getScore(team2Points),
-            style: const TextStyle(fontSize: 40, fontWeight: FontWeight.bold),
+          GestureDetector(
+            onTap: addPointTeam2,
+            child: Text(
+              _getScore(team2Points),
+              style: TextStyle(fontSize: 80, color: Colors.grey.shade800, fontWeight: FontWeight.bold, fontFamily: 'sf-pro-display'),
+            ),
           ),
         ],
       ),

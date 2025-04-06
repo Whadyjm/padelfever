@@ -1,3 +1,4 @@
+import 'package:confetti/confetti.dart';
 import 'package:flutter/material.dart';
 import '../models/match.dart';
 import '../models/player.dart';
@@ -7,7 +8,9 @@ import '../models/game.dart';
 class MatchProvider with ChangeNotifier {
   List<Match> _matches = [];
   List<Player> _players = [];
+  ConfettiController _controller = ConfettiController();
 
+  ConfettiController get controller => _controller;
   List<Match> get matches => [..._matches];
   List<Player> get players => [..._players];
 
@@ -24,6 +27,19 @@ class MatchProvider with ChangeNotifier {
   void clearPlayers() {
     _players.clear();
     notifyListeners();
+  }
+
+  void clearMatches() {
+    _matches.clear();
+    notifyListeners();
+  }
+
+  void startConfetti() {
+    _controller.play();
+  }
+
+  void stopConfetti() {
+    _controller.stop();
   }
 
   List<Team> createRandomTeams() {

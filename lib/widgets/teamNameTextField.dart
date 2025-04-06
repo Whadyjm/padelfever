@@ -19,6 +19,14 @@ class TeamNameTextField extends StatelessWidget {
           hintText,
         ),
         style: AppText.subtitleStyle(Colors.grey.shade700),
+        onChanged: (text) {
+          if (text.isNotEmpty) {
+            controller.value = controller.value.copyWith(
+              text: text[0].toUpperCase() + text.substring(1),
+              selection: TextSelection.collapsed(offset: text.length),
+            );
+          }
+        },
       ),
     );
   }
