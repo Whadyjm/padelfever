@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:padelpoint/providers/btn_provider.dart';
 import 'package:padelpoint/providers/match_provider.dart';
+import 'package:padelpoint/providers/players_provider.dart';
 import 'package:padelpoint/screens/home_screen.dart';
 import 'package:provider/provider.dart';
 
@@ -20,6 +21,9 @@ class MyApp extends StatelessWidget {
         ),
         ChangeNotifierProvider(
           create: (ctx) => BtnProvider(),
+        ),
+        ChangeNotifierProvider(
+          create: (ctx) => PlayersProvider(),
         ),
       ],
       child: MaterialApp(

@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:padelpoint/theme/colors.dart';
+import 'package:padelpoint/widgets/appBtn.dart';
 import 'package:provider/provider.dart';
 import '../models/game.dart';
 import '../models/player.dart';
 import '../providers/match_provider.dart';
+import '../theme/text.dart';
+import '../widgets/PlayersTextField.dart';
 import 'match_screen.dart';
 
 class RandomTeamsScreen extends StatefulWidget {
@@ -22,10 +26,9 @@ class _RandomTeamsScreenState extends State<RandomTeamsScreen> {
     if (_playerController.text.isEmpty) return;
 
     setState(() {
-      _players.add(Player(
-        id: DateTime.now().toString(),
-        name: _playerController.text,
-      ));
+      _players.add(
+        Player(id: DateTime.now().toString(), name: _playerController.text),
+      );
       _playerController.clear();
     });
   }
@@ -39,9 +42,7 @@ class _RandomTeamsScreenState extends State<RandomTeamsScreen> {
   void _createTeams() {
     if (_players.length < 4) {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text('Se necesitan al menos 4 jugadores'),
-        ),
+        const SnackBar(content: Text('Se necesitan al menos 4 jugadores')),
       );
       return;
     }
@@ -57,11 +58,12 @@ class _RandomTeamsScreenState extends State<RandomTeamsScreen> {
     Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (ctx) => MatchScreen(
-          team1: teams[0],
-          team2: teams[1],
-          gameSystem: _gameSystem,
-        ),
+        builder:
+            (ctx) => MatchScreen(
+              team1: teams[0],
+              team2: teams[1],
+              gameSystem: _gameSystem,
+            ),
       ),
     );
   }
@@ -74,59 +76,79 @@ class _RandomTeamsScreenState extends State<RandomTeamsScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final matchProvider = Provider.of<MatchProvider>(context);
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Equipos aleatorios'),
-      ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16),
         child: Column(
           children: [
-            // Add players
             Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Expanded(
-                  child: TextFormField(
-                    controller: _playerController,
-                    decoration: const InputDecoration(labelText: 'Nombre del jugador'),
+                SizedBox(
+                  width: MediaQuery.sizeOf(context).width - 100,
+                  child: PlayersTextField(
+                    nombre: _playerController,
+                    hintText: 'Nombre del jugador',
                   ),
                 ),
-                IconButton(
-                  icon: const Icon(Icons.add),
+                FloatingActionButton(
+                  mini: true,
+                  elevation: 0,
+                  backgroundColor: AppColors.primaryColorLight,
                   onPressed: _addPlayer,
+                  child: const Icon(
+                    Icons.add_rounded,
+                    color: Colors.white,
+                    size: 25,
+                  ),
                 ),
               ],
             ),
             const SizedBox(height: 10),
-            const Text(
-              'Jugadores agregados:',
-              style: TextStyle(fontWeight: FontWeight.bold),
-            ),
+
             const SizedBox(height: 10),
             _players.isEmpty
-                ? const Text('No hay jugadores agregados')
+                ? Text(
+                  'No hay jugadores agregados',
+                  style: AppText.smallTextStyle(Colors.grey.shade500),
+                )
                 : Column(
-              children: _players
-                  .map(
-                    (player) => ListTile(
-                  title: Text(player.name),
-                  trailing: IconButton(
-                    icon: const Icon(Icons.delete),
-                    onPressed: () => _removePlayer(player),
-                  ),
+                  children:
+                      _players
+                          .map(
+                            (player) => ListTile(
+                              title: Text(player.name, style: AppText.smallTextStyle(Colors.grey.shade700),),
+                              trailing: IconButton(
+                                icon: const Icon(Icons.remove, color: Colors.redAccent,),
+                                onPressed: () => _removePlayer(player),
+                              ),
+                            ),
+                          )
+                          .toList(),
                 ),
-              )
-                  .toList(),
+            const SizedBox(height: 20),
+            // Game system
+            Row(
+              children: [
+                Text(
+                  'Sistema de juego',
+                  style: AppText.subtitleStyle(Colors.grey.shade700),
+                ),
+                const SizedBox(width: 20),
+                Expanded(
+                  child: Divider(color: Colors.grey.shade300, thickness: 0.8),
+                ),
+              ],
             ),
             const SizedBox(height: 20),
-
-            // Game system
-            const Text(
-              'Sistema de juego',
-              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-            ),
             RadioListTile<GameSystem>(
-              title: const Text('Sistema de ventaja'),
+              hoverColor: Colors.transparent,
+              activeColor: AppColors.primaryColorLight,
+              title: Text(
+                'Sistema de ventaja',
+                style: AppText.smallTextStyle(Colors.grey.shade700),
+              ),
               value: GameSystem.advantage,
               groupValue: _gameSystem,
               onChanged: (value) {
@@ -136,7 +158,12 @@ class _RandomTeamsScreenState extends State<RandomTeamsScreen> {
               },
             ),
             RadioListTile<GameSystem>(
-              title: const Text('Punto de oro'),
+              hoverColor: Colors.transparent,
+              activeColor: Colors.amber,
+              title: Text(
+                'Punto de oro',
+                style: AppText.smallTextStyle(Colors.grey.shade700),
+              ),
               value: GameSystem.goldenPoint,
               groupValue: _gameSystem,
               onChanged: (value) {
@@ -147,10 +174,10 @@ class _RandomTeamsScreenState extends State<RandomTeamsScreen> {
             ),
             const SizedBox(height: 20),
 
-            // Create teams button
-            ElevatedButton(
+            AppBtn(
+              isEnabled: _players.length >= 4 ? true : false,
+              text: 'Comenzar partido',
               onPressed: _createTeams,
-              child: const Text('Crear equipos aleatorios'),
             ),
           ],
         ),

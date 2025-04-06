@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../providers/match_provider.dart';
+import '../theme/text.dart';
 
 class HistoryScreen extends StatelessWidget {
   static const routeName = '/history';
@@ -12,11 +13,12 @@ class HistoryScreen extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Historial de partidos'),
+        leading: IconButton(onPressed: () => Navigator.pop(context), icon: Icon(Icons.arrow_back_ios_rounded)),
+        title: Text('Historial de partidos', style: AppText.titleStyle(Colors.grey.shade700),),
       ),
       body: matches.isEmpty
-          ? const Center(
-        child: Text('No hay partidos registrados'),
+          ? Center(
+        child: Text('No hay partidos registrados', style: AppText.subtitleStyle(Colors.grey)),
       )
           : ListView.builder(
         itemCount: matches.length,

@@ -29,6 +29,14 @@ class PlayersTextField extends StatelessWidget {
               borderSide: BorderSide(color: Colors.blue),
             ),
           ),
+          onChanged: (text) {
+            if (text.isNotEmpty) {
+              nombre.value = nombre.value.copyWith(
+                text: text[0].toUpperCase() + text.substring(1),
+                selection: TextSelection.collapsed(offset: text.length),
+              );
+            }
+          },
         )
     );
   }

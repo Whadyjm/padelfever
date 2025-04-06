@@ -8,8 +8,10 @@ import '../models/game.dart';
 import '../models/player.dart' show Player;
 import '../models/team.dart' show Team;
 import '../providers/btn_provider.dart';
+import '../providers/players_provider.dart';
 import '../theme/text.dart';
 import '../widgets/appBtn.dart';
+import '../widgets/teamNameTextField.dart';
 import 'match_screen.dart';
 
 class CreateTeamsScreen extends StatefulWidget {
@@ -22,8 +24,8 @@ class CreateTeamsScreen extends StatefulWidget {
 
 class _CreateTeamsScreenState extends State<CreateTeamsScreen> {
   final _formKey = GlobalKey<FormState>();
-  final _team1NameController = TextEditingController(text: 'Team A');
-  final _team2NameController = TextEditingController(text: 'Team B');
+  final _team1NameController = TextEditingController();
+  final _team2NameController = TextEditingController();
   final _team1Player1Controller = TextEditingController();
   final _team1Player2Controller = TextEditingController();
   final _team2Player1Controller = TextEditingController();
@@ -34,10 +36,41 @@ class _CreateTeamsScreenState extends State<CreateTeamsScreen> {
 
   @override
   void initState() {
+    final playersProvider = Provider.of<PlayersProvider>(
+      context,
+      listen: false,
+    );
+
     _team1Player1Controller.addListener(_updateButtonColor);
     _team1Player2Controller.addListener(_updateButtonColor);
     _team2Player1Controller.addListener(_updateButtonColor);
     _team2Player2Controller.addListener(_updateButtonColor);
+
+    _team1NameController.text = playersProvider.team1;
+    _team2NameController.text = playersProvider.team2;
+    _team1Player1Controller.text = playersProvider.team1Player1;
+    _team1Player2Controller.text = playersProvider.team1Player2;
+    _team2Player1Controller.text = playersProvider.team2Player1;
+    _team2Player2Controller.text = playersProvider.team2Player2;
+
+    _team1NameController.addListener(() {
+      playersProvider.setTeam1(_team1NameController.text);
+    });
+    _team2NameController.addListener(() {
+      playersProvider.setTeam2(_team2NameController.text);
+    });
+    _team1Player1Controller.addListener(() {
+      playersProvider.setTeam1Player1(_team1Player1Controller.text);
+    });
+    _team1Player2Controller.addListener(() {
+      playersProvider.setTeam1Player2(_team1Player2Controller.text);
+    });
+    _team2Player1Controller.addListener(() {
+      playersProvider.setTeam2Player1(_team2Player1Controller.text);
+    });
+    _team2Player2Controller.addListener(() {
+      playersProvider.setTeam2Player2(_team2Player2Controller.text);
+    });
     super.initState();
   }
 
@@ -106,17 +139,9 @@ class _CreateTeamsScreenState extends State<CreateTeamsScreen> {
                 children: [
                   Column(
                     children: [
-                      SizedBox(
-                        width: MediaQuery.of(context).size.width - 100,
-                        child: TextField(
-                          controller: _team1NameController,
-                          decoration: InputDecoration(
-                            border: InputBorder.none,
-                            hintText:
-                                "Ingresa el nombre del equipo A (opcional)",
-                          ),
-                          style: AppText.subtitleStyle(Colors.grey.shade700),
-                        ),
+                      TeamNameTextField(
+                        controller: _team1NameController,
+                        hintText: 'Ingresa el nombre del equipo A (opcional)',
                       ),
                       Visibility(
                         visible: btnProvider.showTextField1 ? true : false,
@@ -139,6 +164,7 @@ class _CreateTeamsScreenState extends State<CreateTeamsScreen> {
                                 height: 40,
                                 width: 40,
                                 child: FloatingActionButton(
+                                  elevation: 0,
                                   backgroundColor:
                                       (_team1Player1Controller
                                                   .text
@@ -148,8 +174,7 @@ class _CreateTeamsScreenState extends State<CreateTeamsScreen> {
                                                   .isNotEmpty)
                                           ? AppColors.secondaryColorLight
                                           : Colors.grey.shade300,
-                                  onPressed: () {
-                                  },
+                                  onPressed: () {},
                                   child: Icon(Icons.check, color: Colors.white),
                                 ),
                               ),
@@ -174,17 +199,9 @@ class _CreateTeamsScreenState extends State<CreateTeamsScreen> {
                 children: [
                   Column(
                     children: [
-                      SizedBox(
-                        width: MediaQuery.of(context).size.width - 100,
-                        child: TextField(
-                          controller: _team2NameController,
-                          decoration: InputDecoration(
-                            border: InputBorder.none,
-                            hintText:
-                                "Ingresa el nombre del equipo B (opcional)",
-                          ),
-                          style: AppText.subtitleStyle(Colors.grey.shade700),
-                        ),
+                      TeamNameTextField(
+                        controller: _team2NameController,
+                        hintText: 'Ingresa el nombre del equipo B (opcional)',
                       ),
                       Visibility(
                         visible: btnProvider.showTextField2 ? true : false,
@@ -207,17 +224,17 @@ class _CreateTeamsScreenState extends State<CreateTeamsScreen> {
                                 height: 40,
                                 width: 40,
                                 child: FloatingActionButton(
+                                  elevation: 0,
                                   backgroundColor:
-                                  (_team2Player1Controller
-                                      .text
-                                      .isNotEmpty &&
-                                      _team2Player2Controller
-                                          .text
-                                          .isNotEmpty)
-                                      ? AppColors.secondaryColorLight
-                                      : Colors.grey.shade300,
-                                  onPressed: () {
-                                  },
+                                      (_team2Player1Controller
+                                                  .text
+                                                  .isNotEmpty &&
+                                              _team2Player2Controller
+                                                  .text
+                                                  .isNotEmpty)
+                                          ? AppColors.secondaryColorLight
+                                          : Colors.grey.shade300,
+                                  onPressed: () {},
                                   child: Icon(Icons.check, color: Colors.white),
                                 ),
                               ),
@@ -285,7 +302,17 @@ class _CreateTeamsScreenState extends State<CreateTeamsScreen> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  AppBtn(text: 'Comenzar partido', onPressed: _startMatch),
+                  AppBtn(
+                    isEnabled:
+                        (_team1Player1Controller.text.isNotEmpty &&
+                                _team1Player2Controller.text.isNotEmpty &&
+                                _team2Player1Controller.text.isNotEmpty &&
+                                _team2Player2Controller.text.isNotEmpty)
+                            ? true
+                            : false,
+                    text: 'Comenzar partido',
+                    onPressed: _startMatch,
+                  ),
                 ],
               ),
             ],

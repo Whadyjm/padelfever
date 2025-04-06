@@ -31,6 +31,7 @@ class AddPlayersSection extends StatelessWidget {
               height: 50,
               width: 50,
               child: FloatingActionButton.extended(
+                elevation: 0,
                 onPressed: toggleTextfield,
                 label: Icon(Icons.add_rounded, color: Colors.white, size: 30),
                 backgroundColor: AppColors.primaryColorLight,
