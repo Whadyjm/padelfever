@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:padelpoint/theme/colors.dart';
 import 'package:padelpoint/widgets/appBtn.dart';
+import 'package:padelpoint/widgets/publicidadWidget.dart';
 import 'package:provider/provider.dart';
 import '../models/game.dart';
 import '../models/player.dart';
@@ -82,6 +83,8 @@ class _RandomTeamsScreenState extends State<RandomTeamsScreen> {
         padding: const EdgeInsets.all(16),
         child: Column(
           children: [
+            PublicidadWidget(),
+            const SizedBox(height: 20,),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [

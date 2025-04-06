@@ -1,9 +1,11 @@
 import 'package:animate_do/animate_do.dart';
+import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 import 'package:padelpoint/theme/colors.dart';
 import 'package:padelpoint/widgets/PlayersTextField.dart';
 import 'package:padelpoint/widgets/addPlayersSection.dart';
+import 'package:padelpoint/widgets/publicidadWidget.dart';
 import 'package:provider/provider.dart';
 import '../models/game.dart';
 import '../models/player.dart' show Player;
@@ -215,245 +217,255 @@ class _CreateTeamsScreenState extends State<CreateTeamsScreen> {
     return Scaffold(
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16),
-        child: Form(
-          key: _formKey,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              // Team 1
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  TeamNameTextField(
-                    controller: _team1NameController,
-                    hintText: 'Ingresa el nombre del equipo A (opcional)',
-                  ),
-                  GestureDetector(
-                    onTap: () {
-                      _pickColorTeam1(_team1Color, (color) {
-                        setState(() {
-                          _team1Color = color;
-                        });
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            PublicidadWidget(),
+            const SizedBox(height: 20),
+            // Team 1
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                TeamNameTextField(
+                  controller: _team1NameController,
+                  hintText: 'Ingresa el nombre del equipo A (opcional)',
+                ),
+                GestureDetector(
+                  onTap: () {
+                    _pickColorTeam1(_team1Color, (color) {
+                      setState(() {
+                        _team1Color = color;
                       });
-                    },
-                    child: Container(
-                      height: 30,
-                      width: 50,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(18),
-                        color: _team1Color,
-                      ),
-                    ),
-                  ),
-                  SizedBox(
+                    });
+                  },
+                  child: Container(
                     height: 30,
                     width: 50,
-                    child: FloatingActionButton(
-                      elevation: 0,
-                      backgroundColor:
-                          (_team1Player1Controller.text.isNotEmpty &&
-                                  _team1Player2Controller.text.isNotEmpty)
-                              ? AppColors.secondaryColorLight
-                              : Colors.grey.shade300,
-                      onPressed: () {},
-                      child: Icon(Icons.check, color: Colors.white),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(18),
+                      color: _team1Color,
                     ),
                   ),
-                  AddPlayersSection(
-                    controller1: _team1Player1Controller,
-                    controller2: _team1Player2Controller,
-                    showTextField: btnProvider.showTextField1,
-                    toggleTextfield: btnProvider.toggleTextField1,
-                  ),
-                ],
-              ),
-              Visibility(
-                visible: btnProvider.showTextField1,
-                child: FadeInRight(
-                  duration: const Duration(milliseconds: 800),
-                  animate: true,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      PlayersTextField(
-                        nombre: _team1Player1Controller,
-                        hintText: 'Jugador 1',
-                      ),
-                      const SizedBox(height: 20),
-                      PlayersTextField(
-                        nombre: _team1Player2Controller,
-                        hintText: 'Jugador 2',
-                      ),
-                    ],
-                  ),
                 ),
-              ),
-              const SizedBox(height: 30),
-              // Team 2
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  TeamNameTextField(
-                    controller: _team2NameController,
-                    hintText: 'Ingresa el nombre del equipo B (opcional)',
-                  ),
-                  GestureDetector(
-                    onTap: () {
-                      _pickColorTeam2(_team2Color, (color) {
-                        setState(() {
-                          _team2Color = color;
-                        });
-                      });
-                    },
-                    child: Container(
-                      height: 30,
-                      width: 50,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(18),
-                        color: _team2Color,
-                      ),
-                    ),
-                  ),
-                  SizedBox(
-                    height: 30,
-                    width: 50,
-                    child: FloatingActionButton(
-                      elevation: 0,
-                      backgroundColor:
-                          (_team2Player1Controller.text.isNotEmpty &&
-                                  _team2Player2Controller.text.isNotEmpty)
-                              ? AppColors.secondaryColorLight
-                              : Colors.grey.shade300,
-                      onPressed: () {},
-                      child: Icon(Icons.check, color: Colors.white),
-                    ),
-                  ),
-                  AddPlayersSection(
-                    controller1: _team2Player1Controller,
-                    controller2: _team2Player2Controller,
-                    showTextField: btnProvider.showTextField2,
-                    toggleTextfield: btnProvider.toggleTextField2,
-                  ),
-                ],
-              ),
-              Visibility(
-                visible: btnProvider.showTextField2,
-                child: FadeInRight(
-                  duration: const Duration(milliseconds: 800),
-                  animate: true,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      PlayersTextField(
-                        nombre: _team2Player1Controller,
-                        hintText: 'Jugador 1',
-                      ),
-                      const SizedBox(height: 20),
-                      PlayersTextField(
-                        nombre: _team2Player2Controller,
-                        hintText: 'Jugador 2',
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-              const SizedBox(height: 20),
-              // Game system
-              Row(
-                children: [
-                  Text(
-                    'Sistema de juego',
-                    style: AppText.subtitleStyle(Colors.grey.shade700),
-                  ),
-                  const SizedBox(width: 20),
-                  Expanded(
-                    child: Divider(color: Colors.grey.shade300, thickness: 0.8),
-                  ),
-                ],
-              ),
-              const SizedBox(height: 20),
-              RadioListTile<GameSystem>(
-                hoverColor: Colors.transparent,
-                activeColor: AppColors.primaryColorLight,
-                title: Text(
-                  'Sistema de ventaja',
-                  style: AppText.smallTextStyle(Colors.grey.shade700),
-                ),
-                value: GameSystem.advantage,
-                groupValue: _gameSystem,
-                onChanged: (value) {
-                  setState(() {
-                    _gameSystem = value!;
-                  });
-                },
-              ),
-              RadioListTile<GameSystem>(
-                hoverColor: Colors.transparent,
-                activeColor: Colors.amber,
-                title: Text(
-                  'Punto de oro',
-                  style: AppText.smallTextStyle(Colors.grey.shade700),
-                ),
-                value: GameSystem.goldenPoint,
-                groupValue: _gameSystem,
-                onChanged: (value) {
-                  setState(() {
-                    _gameSystem = value!;
-                  });
-                },
-              ),
-              const SizedBox(height: 50),
-              // Start button
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  AppBtn(
-                    isEnabled:
+                SizedBox(
+                  height: 30,
+                  width: 50,
+                  child: FloatingActionButton(
+                    elevation: 0,
+                    backgroundColor:
                         (_team1Player1Controller.text.isNotEmpty &&
-                                _team1Player2Controller.text.isNotEmpty &&
-                                _team2Player1Controller.text.isNotEmpty &&
-                                _team2Player2Controller.text.isNotEmpty)
-                            ? true
-                            : false,
-                    text: 'Comenzar partido',
-                    onPressed: (){
-
-                      colorsProvider.team1Color = _team1Color;
-                      colorsProvider.team2Color = _team2Color;
-
-                      final team1 = Team(
-                        id: DateTime.now().toString(),
-                        name: _team1NameController.text,
-                        player1: Player(id: '1', name: _team1Player1Controller.text),
-                        player2: Player(id: '2', name: _team1Player2Controller.text),
-                        color: _team1Color,
-                      );
-
-                      final team2 = Team(
-                        id: DateTime.now().toString() + '2',
-                        name: _team2NameController.text,
-                        player1: Player(id: '3', name: _team2Player1Controller.text),
-                        player2: Player(id: '4', name: _team2Player2Controller.text),
-                        color: _team2Color,
-                      );
-
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder:
-                              (ctx) => MatchScreen(
-                            team1: team1,
-                            team2: team2,
-                            gameSystem: _gameSystem,
-                          ),
-                        ),
-                      );
-                    },
+                                _team1Player2Controller.text.isNotEmpty)
+                            ? AppColors.secondaryColorLight
+                            : Colors.grey.shade300,
+                    onPressed: () {},
+                    child: Icon(Icons.check, color: Colors.white),
                   ),
-                ],
+                ),
+                AddPlayersSection(
+                  controller1: _team1Player1Controller,
+                  controller2: _team1Player2Controller,
+                  showTextField: btnProvider.showTextField1,
+                  toggleTextfield: btnProvider.toggleTextField1,
+                ),
+              ],
+            ),
+            Visibility(
+              visible: btnProvider.showTextField1,
+              child: FadeInRight(
+                duration: const Duration(milliseconds: 800),
+                animate: true,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    PlayersTextField(
+                      nombre: _team1Player1Controller,
+                      hintText: 'Jugador 1',
+                    ),
+                    const SizedBox(height: 20),
+                    PlayersTextField(
+                      nombre: _team1Player2Controller,
+                      hintText: 'Jugador 2',
+                    ),
+                  ],
+                ),
               ),
-            ],
-          ),
+            ),
+            const SizedBox(height: 30),
+            // Team 2
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                TeamNameTextField(
+                  controller: _team2NameController,
+                  hintText: 'Ingresa el nombre del equipo B (opcional)',
+                ),
+                GestureDetector(
+                  onTap: () {
+                    _pickColorTeam2(_team2Color, (color) {
+                      setState(() {
+                        _team2Color = color;
+                      });
+                    });
+                  },
+                  child: Container(
+                    height: 30,
+                    width: 50,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(18),
+                      color: _team2Color,
+                    ),
+                  ),
+                ),
+                SizedBox(
+                  height: 30,
+                  width: 50,
+                  child: FloatingActionButton(
+                    elevation: 0,
+                    backgroundColor:
+                        (_team2Player1Controller.text.isNotEmpty &&
+                                _team2Player2Controller.text.isNotEmpty)
+                            ? AppColors.secondaryColorLight
+                            : Colors.grey.shade300,
+                    onPressed: () {},
+                    child: Icon(Icons.check, color: Colors.white),
+                  ),
+                ),
+                AddPlayersSection(
+                  controller1: _team2Player1Controller,
+                  controller2: _team2Player2Controller,
+                  showTextField: btnProvider.showTextField2,
+                  toggleTextfield: btnProvider.toggleTextField2,
+                ),
+              ],
+            ),
+            Visibility(
+              visible: btnProvider.showTextField2,
+              child: FadeInRight(
+                duration: const Duration(milliseconds: 800),
+                animate: true,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    PlayersTextField(
+                      nombre: _team2Player1Controller,
+                      hintText: 'Jugador 1',
+                    ),
+                    const SizedBox(height: 20),
+                    PlayersTextField(
+                      nombre: _team2Player2Controller,
+                      hintText: 'Jugador 2',
+                    ),
+                  ],
+                ),
+              ),
+            ),
+            const SizedBox(height: 20),
+            // Game system
+            Row(
+              children: [
+                Text(
+                  'Sistema de juego',
+                  style: AppText.subtitleStyle(Colors.grey.shade700),
+                ),
+                const SizedBox(width: 20),
+                Expanded(
+                  child: Divider(color: Colors.grey.shade300, thickness: 0.8),
+                ),
+              ],
+            ),
+            const SizedBox(height: 20),
+            RadioListTile<GameSystem>(
+              hoverColor: Colors.transparent,
+              activeColor: AppColors.primaryColorLight,
+              title: Text(
+                'Sistema de ventaja',
+                style: AppText.smallTextStyle(Colors.grey.shade700),
+              ),
+              value: GameSystem.advantage,
+              groupValue: _gameSystem,
+              onChanged: (value) {
+                setState(() {
+                  _gameSystem = value!;
+                });
+              },
+            ),
+            RadioListTile<GameSystem>(
+              hoverColor: Colors.transparent,
+              activeColor: Colors.amber,
+              title: Text(
+                'Punto de oro',
+                style: AppText.smallTextStyle(Colors.grey.shade700),
+              ),
+              value: GameSystem.goldenPoint,
+              groupValue: _gameSystem,
+              onChanged: (value) {
+                setState(() {
+                  _gameSystem = value!;
+                });
+              },
+            ),
+            const SizedBox(height: 20),
+            // Start button
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                AppBtn(
+                  isEnabled:
+                      (_team1Player1Controller.text.isNotEmpty &&
+                              _team1Player2Controller.text.isNotEmpty &&
+                              _team2Player1Controller.text.isNotEmpty &&
+                              _team2Player2Controller.text.isNotEmpty)
+                          ? true
+                          : false,
+                  text: 'Comenzar partido',
+                  onPressed: () {
+                    colorsProvider.team1Color = _team1Color;
+                    colorsProvider.team2Color = _team2Color;
+
+                    final team1 = Team(
+                      id: DateTime.now().toString(),
+                      name: _team1NameController.text,
+                      player1: Player(
+                        id: '1',
+                        name: _team1Player1Controller.text,
+                      ),
+                      player2: Player(
+                        id: '2',
+                        name: _team1Player2Controller.text,
+                      ),
+                      color: _team1Color,
+                    );
+
+                    final team2 = Team(
+                      id: DateTime.now().toString() + '2',
+                      name: _team2NameController.text,
+                      player1: Player(
+                        id: '3',
+                        name: _team2Player1Controller.text,
+                      ),
+                      player2: Player(
+                        id: '4',
+                        name: _team2Player2Controller.text,
+                      ),
+                      color: _team2Color,
+                    );
+
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder:
+                            (ctx) => MatchScreen(
+                              team1: team1,
+                              team2: team2,
+                              gameSystem: _gameSystem,
+                            ),
+                      ),
+                    );
+                  },
+                ),
+              ],
+            ),
+          ],
         ),
       ),
     );
