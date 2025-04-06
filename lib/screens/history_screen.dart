@@ -46,6 +46,18 @@ class HistoryScreen extends StatelessWidget {
                     ),
                   ),
                 ),
+                const Divider(),
+                TextButton(
+                  onPressed: () {
+                    Navigator.of(ctx).pop();
+                  },
+                  child: Center(
+                    child: Text(
+                      'Cancelar',
+                      style: AppText.subtitleStyle(Colors.redAccent),
+                    ),
+                  ),
+                ),
               ],
             ),
       );
@@ -65,7 +77,7 @@ class HistoryScreen extends StatelessWidget {
         ),
         actions: [
           IconButton(
-            onPressed: () => _clearConfirmation(),
+            onPressed: () => matches.isEmpty ? null:_clearConfirmation(),
             icon: Icon(Icons.delete, color: Colors.white),
           ),
         ],
