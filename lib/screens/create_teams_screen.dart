@@ -1,7 +1,13 @@
+// Pantalla para crear equipos antes de comenzar un partido de pádel
+// Permite configurar nombres de equipos, jugadores, colores y sistema de juego
+
+// Dependencias para animaciones, estilos y componentes UI
 import 'package:animate_do/animate_do.dart';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
+
+// Importaciones locales: temas, widgets y modelos
 import 'package:padelpoint/theme/colors.dart';
 import 'package:padelpoint/widgets/PlayersTextField.dart';
 import 'package:padelpoint/widgets/addPlayersSection.dart';
@@ -18,40 +24,50 @@ import '../widgets/appBtn.dart';
 import '../widgets/teamNameTextField.dart';
 import 'match_screen.dart';
 
+// Widget Stateful que representa la pantalla de creación de equipos
 class CreateTeamsScreen extends StatefulWidget {
-  static const routeName = '/create-teams';
-  const CreateTeamsScreen({super.key});
+  static const routeName = '/create-teams'; // Ruta de navegación
+  const CreateTeamsScreen({super.key}); // Constructor
 
   @override
-  _CreateTeamsScreenState createState() => _CreateTeamsScreenState();
+  _CreateTeamsScreenState createState() => _CreateTeamsScreenState(); // Crea el estado
 }
 
+// Estado de la pantalla de creación de equipos
 class _CreateTeamsScreenState extends State<CreateTeamsScreen> {
-  final _formKey = GlobalKey<FormState>();
-  final _team1NameController = TextEditingController();
-  final _team2NameController = TextEditingController();
-  final _team1Player1Controller = TextEditingController();
-  final _team1Player2Controller = TextEditingController();
-  final _team2Player1Controller = TextEditingController();
-  final _team2Player2Controller = TextEditingController();
-  bool team1Ready = false;
-  bool team2Ready = false;
-  GameSystem _gameSystem = GameSystem.advantage;
-  Color _team1Color = Colors.blue;
-  Color _team2Color = Colors.green;
+  // Controladores para los campos de texto del formulario
+  final _formKey = GlobalKey<FormState>(); // Key para validación de formulario
+  final _team1NameController = TextEditingController(); // Controlador nombre equipo 1
+  final _team2NameController = TextEditingController(); // Controlador nombre equipo 2
+  final _team1Player1Controller = TextEditingController(); // Controlador jugador 1 equipo 1
+  final _team1Player2Controller = TextEditingController(); // Controlador jugador 2 equipo 1
+  final _team2Player1Controller = TextEditingController(); // Controlador jugador 1 equipo 2
+  final _team2Player2Controller = TextEditingController(); // Controlador jugador 2 equipo 2
+
+  // Estados internos del widget
+  bool team1Ready = false; // Indica si equipo 1 está completo
+  bool team2Ready = false; // Indica si equipo 2 está completo
+  GameSystem _gameSystem = GameSystem.advantage; // Sistema de juego seleccionado
+  Color _team1Color = Colors.blue; // Color del equipo 1
+  Color _team2Color = Colors.green; // Color del equipo 2
 
   @override
   void initState() {
+    super.initState();
+
+    // Obtiene el provider de jugadores
     final playersProvider = Provider.of<PlayersProvider>(
       context,
       listen: false,
     );
 
+    // Configura listeners para actualizar estado de botones
     _team1Player1Controller.addListener(_updateButtonColor);
     _team1Player2Controller.addListener(_updateButtonColor);
     _team2Player1Controller.addListener(_updateButtonColor);
     _team2Player2Controller.addListener(_updateButtonColor);
 
+    // Inicializa los controladores con valores del provider
     _team1NameController.text = playersProvider.team1;
     _team2NameController.text = playersProvider.team2;
     _team1Player1Controller.text = playersProvider.team1Player1;
@@ -59,6 +75,7 @@ class _CreateTeamsScreenState extends State<CreateTeamsScreen> {
     _team2Player1Controller.text = playersProvider.team2Player1;
     _team2Player2Controller.text = playersProvider.team2Player2;
 
+    // Configura listeners para sincronizar con el provider
     _team1NameController.addListener(() {
       playersProvider.setTeam1(_team1NameController.text);
     });
@@ -77,15 +94,16 @@ class _CreateTeamsScreenState extends State<CreateTeamsScreen> {
     _team2Player2Controller.addListener(() {
       playersProvider.setTeam2Player2(_team2Player2Controller.text);
     });
-    super.initState();
   }
 
+  // Actualiza el estado para reflejar cambios en los campos
   void _updateButtonColor() {
     setState(() {});
   }
 
   @override
   void dispose() {
+    // Limpieza de listeners y controladores
     _team1Player1Controller.removeListener(_updateButtonColor);
     _team1Player2Controller.removeListener(_updateButtonColor);
     _team2Player1Controller.removeListener(_updateButtonColor);
@@ -99,6 +117,7 @@ class _CreateTeamsScreenState extends State<CreateTeamsScreen> {
     super.dispose();
   }
 
+  // Muestra diálogo para seleccionar color del equipo 1
   void _pickColorTeam1(Color currentColor, onColorChanged) {
     showDialog(
       context: context,
@@ -154,6 +173,7 @@ class _CreateTeamsScreenState extends State<CreateTeamsScreen> {
     );
   }
 
+  // Muestra diálogo para seleccionar color del equipo 2
   void _pickColorTeam2(Color currentColor, onColorChanged) {
     showDialog(
       context: context,
@@ -211,6 +231,7 @@ class _CreateTeamsScreenState extends State<CreateTeamsScreen> {
 
   @override
   Widget build(BuildContext context) {
+    // Obtiene los providers necesarios
     final btnProvider = Provider.of<BtnProvider>(context);
     final colorsProvider = Provider.of<ColorsProvider>(context);
 
@@ -220,16 +241,21 @@ class _CreateTeamsScreenState extends State<CreateTeamsScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            // Widget de publicidad
             PublicidadWidget(),
             const SizedBox(height: 20),
-            // Team 1
+
+            // Configuración del equipo 1
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
+                // Campo para nombre del equipo 1
                 TeamNameTextField(
                   controller: _team1NameController,
                   hintText: 'Ingresa el nombre del equipo A (opcional)',
                 ),
+
+                // Selector de color para equipo 1
                 GestureDetector(
                   onTap: () {
                     _pickColorTeam1(_team1Color, (color) {
@@ -247,20 +273,24 @@ class _CreateTeamsScreenState extends State<CreateTeamsScreen> {
                     ),
                   ),
                 ),
+
+                // Indicador visual de equipo completo
                 SizedBox(
                   height: 30,
                   width: 50,
                   child: FloatingActionButton(
                     elevation: 0,
                     backgroundColor:
-                        (_team1Player1Controller.text.isNotEmpty &&
-                                _team1Player2Controller.text.isNotEmpty)
-                            ? AppColors.secondaryColorLight
-                            : Colors.grey.shade300,
+                    (_team1Player1Controller.text.isNotEmpty &&
+                        _team1Player2Controller.text.isNotEmpty)
+                        ? AppColors.secondaryColorLight
+                        : Colors.grey.shade300,
                     onPressed: () {},
                     child: Icon(Icons.check, color: Colors.white),
                   ),
                 ),
+
+                // Sección para agregar jugadores al equipo 1
                 AddPlayersSection(
                   controller1: _team1Player1Controller,
                   controller2: _team1Player2Controller,
@@ -269,6 +299,8 @@ class _CreateTeamsScreenState extends State<CreateTeamsScreen> {
                 ),
               ],
             ),
+
+            // Campos para jugadores del equipo 1 (visibles condicionalmente)
             Visibility(
               visible: btnProvider.showTextField1,
               child: FadeInRight(
@@ -291,7 +323,8 @@ class _CreateTeamsScreenState extends State<CreateTeamsScreen> {
               ),
             ),
             const SizedBox(height: 30),
-            // Team 2
+
+            // Configuración del equipo 2 (similar al equipo 1)
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -322,10 +355,10 @@ class _CreateTeamsScreenState extends State<CreateTeamsScreen> {
                   child: FloatingActionButton(
                     elevation: 0,
                     backgroundColor:
-                        (_team2Player1Controller.text.isNotEmpty &&
-                                _team2Player2Controller.text.isNotEmpty)
-                            ? AppColors.secondaryColorLight
-                            : Colors.grey.shade300,
+                    (_team2Player1Controller.text.isNotEmpty &&
+                        _team2Player2Controller.text.isNotEmpty)
+                        ? AppColors.secondaryColorLight
+                        : Colors.grey.shade300,
                     onPressed: () {},
                     child: Icon(Icons.check, color: Colors.white),
                   ),
@@ -360,7 +393,8 @@ class _CreateTeamsScreenState extends State<CreateTeamsScreen> {
               ),
             ),
             const SizedBox(height: 20),
-            // Game system
+
+            // Selección del sistema de juego
             Row(
               children: [
                 Text(
@@ -374,6 +408,8 @@ class _CreateTeamsScreenState extends State<CreateTeamsScreen> {
               ],
             ),
             const SizedBox(height: 20),
+
+            // Opción: Sistema de ventaja
             RadioListTile<GameSystem>(
               hoverColor: Colors.transparent,
               activeColor: AppColors.primaryColorLight,
@@ -389,6 +425,8 @@ class _CreateTeamsScreenState extends State<CreateTeamsScreen> {
                 });
               },
             ),
+
+            // Opción: Punto de oro
             RadioListTile<GameSystem>(
               hoverColor: Colors.transparent,
               activeColor: Colors.amber,
@@ -405,23 +443,26 @@ class _CreateTeamsScreenState extends State<CreateTeamsScreen> {
               },
             ),
             const SizedBox(height: 20),
-            // Start button
+
+            // Botón para comenzar el partido
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 AppBtn(
                   isEnabled:
-                      (_team1Player1Controller.text.isNotEmpty &&
-                              _team1Player2Controller.text.isNotEmpty &&
-                              _team2Player1Controller.text.isNotEmpty &&
-                              _team2Player2Controller.text.isNotEmpty)
-                          ? true
-                          : false,
+                  (_team1Player1Controller.text.isNotEmpty &&
+                      _team1Player2Controller.text.isNotEmpty &&
+                      _team2Player1Controller.text.isNotEmpty &&
+                      _team2Player2Controller.text.isNotEmpty)
+                      ? true
+                      : false,
                   text: 'Comenzar partido',
                   onPressed: () {
+                    // Guarda los colores seleccionados
                     colorsProvider.team1Color = _team1Color;
                     colorsProvider.team2Color = _team2Color;
 
+                    // Crea los equipos con la configuración actual
                     final team1 = Team(
                       id: DateTime.now().toString(),
                       name: _team1NameController.text,
@@ -450,15 +491,16 @@ class _CreateTeamsScreenState extends State<CreateTeamsScreen> {
                       color: _team2Color,
                     );
 
+                    // Navega a la pantalla de partido
                     Navigator.push(
                       context,
                       MaterialPageRoute(
                         builder:
                             (ctx) => MatchScreen(
-                              team1: team1,
-                              team2: team2,
-                              gameSystem: _gameSystem,
-                            ),
+                          team1: team1,
+                          team2: team2,
+                          gameSystem: _gameSystem,
+                        ),
                       ),
                     );
                   },
