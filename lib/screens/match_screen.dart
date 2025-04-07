@@ -324,8 +324,6 @@ class _MatchScreenState extends State<MatchScreen> {
                     ),
                   ],
                 ),
-                const SizedBox(height: 10,),
-                PublicidadWidget(),
                 // Indicador de tie-break (si aplica)
                 Padding(
                   padding: const EdgeInsets.all(16),
@@ -341,6 +339,10 @@ class _MatchScreenState extends State<MatchScreen> {
                     ],
                   ),
                 ),
+                const SizedBox(height: 10,),
+                PublicidadWidget(),
+                PublicidadWidget(),
+                PublicidadWidget(),
               ],
             ),
           ),
