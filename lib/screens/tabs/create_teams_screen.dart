@@ -13,16 +13,16 @@ import 'package:padelpoint/widgets/PlayersTextField.dart';
 import 'package:padelpoint/widgets/addPlayersSection.dart';
 import 'package:padelpoint/widgets/publicidadWidget.dart';
 import 'package:provider/provider.dart';
-import '../models/game.dart';
-import '../models/player.dart' show Player;
-import '../models/team.dart' show Team;
-import '../providers/btn_provider.dart';
-import '../providers/colors_provider.dart';
-import '../providers/players_provider.dart';
-import '../theme/text.dart';
-import '../widgets/appBtn.dart';
-import '../widgets/teamNameTextField.dart';
-import 'match_screen.dart';
+import '../../models/game.dart';
+import '../../models/player.dart' show Player;
+import '../../models/team.dart' show Team;
+import '../../providers/btn_provider.dart';
+import '../../providers/colors_provider.dart';
+import '../../providers/players_provider.dart';
+import '../../theme/text.dart';
+import '../../widgets/appBtn.dart';
+import '../../widgets/teamNameTextField.dart';
+import '../match_screen.dart';
 
 // Widget Stateful que representa la pantalla de creación de equipos
 class CreateTeamsScreen extends StatefulWidget {

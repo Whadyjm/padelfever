@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:padelpoint/screens/random_teams_screen.dart';
+import 'package:padelpoint/screens/tabs/random_teams_screen.dart';
 import 'package:padelpoint/theme/colors.dart';
 import 'package:provider/provider.dart';
 import '../theme/text.dart';
-import 'create_teams_screen.dart';
+import 'tabs/create_teams_screen.dart';
 import 'history_screen.dart';
 
 class HomeScreen extends StatelessWidget {

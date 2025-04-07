@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:padelpoint/models/match.dart';
 import 'package:padelpoint/providers/colors_provider.dart';
 import 'package:padelpoint/theme/colors.dart';
+import 'package:padelpoint/widgets/publicidadWidget.dart';
 import 'package:provider/provider.dart';
 import '../models/game.dart';
 import '../models/team.dart';
@@ -323,6 +324,8 @@ class _MatchScreenState extends State<MatchScreen> {
                     ),
                   ],
                 ),
+                const SizedBox(height: 10,),
+                PublicidadWidget(),
                 // Indicador de tie-break (si aplica)
                 Padding(
                   padding: const EdgeInsets.all(16),

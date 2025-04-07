@@ -3,12 +3,12 @@ import 'package:padelpoint/theme/colors.dart';
 import 'package:padelpoint/widgets/appBtn.dart';
 import 'package:padelpoint/widgets/publicidadWidget.dart';
 import 'package:provider/provider.dart';
-import '../models/game.dart';
-import '../models/player.dart';
-import '../providers/match_provider.dart';
-import '../theme/text.dart';
-import '../widgets/PlayersTextField.dart';
-import 'match_screen.dart';
+import '../../models/game.dart';
+import '../../models/player.dart';
+import '../../providers/match_provider.dart';
+import '../../theme/text.dart';
+import '../../widgets/PlayersTextField.dart';
+import '../match_screen.dart';
 
 /// Pantalla para crear equipos aleatorios a partir de una lista de jugadores
 class RandomTeamsScreen extends StatefulWidget {

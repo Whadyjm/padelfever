@@ -48,6 +48,6 @@ class Team {
   /// Si [name] está vacío, devuelve la combinación de nombres de los jugadores
   /// en formato "Jugador1 - Jugador2"
   String get teamName => name.isEmpty
-      ? '${player1.name} - ${player2.name}'
+      ? 'Random Team'
       : name;
 }
