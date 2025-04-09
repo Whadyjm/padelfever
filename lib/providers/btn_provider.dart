@@ -12,12 +12,15 @@ class BtnProvider with ChangeNotifier {
   // Estado privado que controla la visibilidad del segundo campo de texto
   bool _showTextField2 = false;
 
+  bool _blur = true;
+
   /// Getter público para acceder al estado de visibilidad del primer campo
   bool get showTextField1 => _showTextField1;
 
   /// Getter público para acceder al estado de visibilidad del segundo campo
   bool get showTextField2 => _showTextField2;
 
+  bool get blur => _blur;
   /// Alterna (toggle) la visibilidad del primer campo de texto
   ///
   /// Cambia el estado actual y notifica a los listeners (oyentes)
@@ -34,5 +37,10 @@ class BtnProvider with ChangeNotifier {
   void toggleTextField2() {
     _showTextField2 = !_showTextField2; // Invierte el valor actual
     notifyListeners(); // Notifica a los widgets suscritos
+  }
+
+  void hideBlur(){
+    _blur = false;
+    notifyListeners();
   }
 }

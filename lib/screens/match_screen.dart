@@ -341,8 +341,6 @@ class _MatchScreenState extends State<MatchScreen> {
                 ),
                 const SizedBox(height: 10,),
                 PublicidadWidget(),
-                PublicidadWidget(),
-                PublicidadWidget(),
               ],
             ),
           ),

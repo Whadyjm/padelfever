@@ -3,6 +3,7 @@
 
 // Dependencias para animaciones, estilos y componentes UI
 import 'package:animate_do/animate_do.dart';
+import 'package:blur/blur.dart';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
