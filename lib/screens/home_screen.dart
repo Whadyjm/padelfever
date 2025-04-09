@@ -5,7 +5,7 @@ import 'package:padelpoint/theme/colors.dart';
 import 'package:provider/provider.dart';
 import '../providers/btn_provider.dart';
 import '../theme/text.dart';
-import '../widgets/blurBox.dart';
+import '../widgets/authWidgets/authWidget.dart';
 import 'tabs/create_teams_screen.dart';
 import 'history_screen.dart';
 

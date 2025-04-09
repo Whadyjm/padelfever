@@ -15,7 +15,7 @@ class AuthTextField extends StatelessWidget {
   Widget build(BuildContext context) {
     return SizedBox(
       height: 50,
-      width: 230,
+      width: 280,
       child: TextFormField(
         maxLength: 25,
         style: AppText.smallTextStyle(Colors.grey.shade700),
@@ -24,7 +24,7 @@ class AuthTextField extends StatelessWidget {
         decoration: InputDecoration(
           counterText: "",
           hintText: hintText,
-          hintStyle: AppText.verySmallTextStyle(Colors.grey.shade500),
+          hintStyle: AppText.smallTextStyle(Colors.grey.shade500),
           filled: true,
           fillColor: Colors.white,
           border: OutlineInputBorder(

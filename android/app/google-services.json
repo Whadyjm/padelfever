@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "33898652058",
+    "project_id": "padelfever-dcd3b",
+    "storage_bucket": "padelfever-dcd3b.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:33898652058:android:9fc7168a7c704e8b1d1a23",
+        "android_client_info": {
+          "package_name": "com.example.padelpoint"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAlEX3KeWCOyxGoWFs-dokuJ161hgWeyZc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

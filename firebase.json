@@ -1,11 +1,1 @@
-{
-  "hosting": {
-    "site": "padelfever",
-    "public": "build/web",
-    "ignore": [
-      "firebase.json",
-      "**/.*",
-      "**/node_modules/**"
-    ]
-  }
-}
+{"hosting":{"site":"padelfever","public":"build/web","ignore":["firebase.json","**/.*","**/node_modules/**"]},"flutter":{"platforms":{"android":{"default":{"projectId":"padelfever-dcd3b","appId":"1:33898652058:android:9fc7168a7c704e8b1d1a23","fileOutput":"android/app/google-services.json"}},"dart":{"lib/firebase_options.dart":{"projectId":"padelfever-dcd3b","configurations":{"android":"1:33898652058:android:9fc7168a7c704e8b1d1a23","ios":"1:33898652058:ios:fadb49d77391cc781d1a23","macos":"1:33898652058:ios:fadb49d77391cc781d1a23","web":"1:33898652058:web:638012413a364df31d1a23","windows":"1:33898652058:web:8bf4716be31efbef1d1a23"}}}}}}
