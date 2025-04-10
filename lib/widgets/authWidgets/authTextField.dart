@@ -2,14 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:padelpoint/theme/text.dart';
 
 class AuthTextField extends StatelessWidget {
-  const AuthTextField({
+  AuthTextField({
     super.key,
     required this.nombre,
     required this.hintText,
+    this.hidePassword,
   });
 
   final TextEditingController nombre;
   final String hintText;
+  bool? hidePassword = false;
 
   @override
   Widget build(BuildContext context) {
@@ -17,6 +19,7 @@ class AuthTextField extends StatelessWidget {
       height: 50,
       width: 280,
       child: TextFormField(
+        obscureText: hidePassword ?? false,
         maxLength: 25,
         style: AppText.smallTextStyle(Colors.grey.shade700),
         controller: nombre,
