@@ -7,9 +7,10 @@ import '../theme/text.dart';
 
 class FirebaseServices {
 
-  Future Auth(context, userController, passwordController) async {
+  Future Auth(context, userController, passwordController, _isLoading) async {
 
     final btnProvider = Provider.of<BtnProvider>(context, listen: false);
+
 
     try {
       await FirebaseAuth.instance
@@ -26,16 +27,41 @@ class FirebaseServices {
       );
         userController.clear();
         passwordController.clear();
-        btnProvider.hideBlur();
+        //btnProvider.hideBlur();
     } on FirebaseAuthException catch (e) {
       String errorMessage;
-      if (e.code == 'user-not-found') {
-        errorMessage = 'No se encontró un usuario con ese correo.';
-      } else if (e.code == 'wrong-password') {
-        errorMessage = 'Contraseña incorrecta.';
-      } else {
-        errorMessage = 'Error de autenticación.';
+      switch (e.code) {
+        case 'invalid-email':
+          errorMessage = 'El correo electrónico no es válido.';
+          break;
+        case 'user-not-found':
+          errorMessage = 'No se encontró un usuario con este correo.';
+          break;
+        case 'wrong-password':
+          errorMessage = 'La contraseña es incorrecta.';
+          break;
+        case 'network-request-failed':
+          errorMessage = 'Error de red. Verifica tu conexión.';
+          break;
+        default:
+          errorMessage = 'Ocurrió un error inesperado. Inténtalo de nuevo.';
       }
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(errorMessage),
+          backgroundColor: Colors.red,
+        ),
+      );
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Error desconocido: $e'),
+          backgroundColor: Colors.red,
+        ),
+      );
+    } finally {
+      userController.clear();
+      passwordController.clear();
     }
   }
 }

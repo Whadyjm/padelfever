@@ -18,12 +18,17 @@ class BlurBox extends StatefulWidget {
 
 class _BlurBoxState extends State<BlurBox> {
   bool _isLoading = false;
+  TextEditingController userController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
+
+  @override
+  void initState() {
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
-    TextEditingController userController = TextEditingController();
-    TextEditingController passwordController = TextEditingController();
-    final btnProvider = Provider.of<BtnProvider>(context, listen: false);
+    final btnProvider = Provider.of<BtnProvider>(context, listen: true);
 
     final blur = btnProvider.blur;
     return Visibility(
@@ -130,27 +135,53 @@ class _BlurBoxState extends State<BlurBox> {
                           ),
                           actions: [
                             Center(
-                              child: MaterialButton(
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.all(
-                                    Radius.circular(8),
-                                  ),
-                                ),
-                                height: 50,
-                                minWidth: 200,
-                                color: AppColors.primaryColorLight,
-                                onPressed: () async {
-                                  await FirebaseServices().Auth(
-                                    context,
-                                    userController,
-                                    passwordController,
-                                  );
-                                  setState(() {});
-                                },
-                                child: Text(
-                                  'Iniciar sesión',
-                                  style: AppText.smallTextStyle(Colors.white),
-                                ),
+                              child: StatefulBuilder(
+                                builder:
+                                    (
+                                      BuildContext context,
+                                      void Function(void Function()) setState,
+                                    ) => MaterialButton(
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.all(
+                                          Radius.circular(8),
+                                        ),
+                                      ),
+                                      height: 50,
+                                      minWidth: 200,
+                                      color: AppColors.primaryColorLight,
+                                      onPressed: () async {
+                                        setState(() {
+                                          _isLoading = true;
+                                        });
+                                        await FirebaseServices().Auth(
+                                          context,
+                                          userController,
+                                          passwordController,
+                                          _isLoading,
+                                        );
+                                        setState(() {
+                                          _isLoading = false;
+                                          btnProvider.hideBlur();
+                                        });
+                                      },
+                                      child:
+                                          _isLoading
+                                              ? SizedBox(
+                                                height: 20,
+                                                width: 20,
+                                                child:
+                                                    CircularProgressIndicator(
+                                                      color: Colors.white,
+                                                      strokeWidth: 4,
+                                                    ),
+                                              )
+                                              : Text(
+                                                'Iniciar sesión',
+                                                style: AppText.smallTextStyle(
+                                                  Colors.white,
+                                                ),
+                                              ),
+                                    ),
                               ),
                             ),
                           ],
