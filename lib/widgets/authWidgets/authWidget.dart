@@ -102,25 +102,21 @@ class _BlurBoxState extends State<BlurBox> {
                               hintText: 'Contraseña',
                             ),
                             const SizedBox(height: 10),
-                            Row(
-                              children: [
-                                TextButton(
-                                  onPressed: () {},
-                                  child: Text(
-                                    '¿Olvidaste tu contraseña?',
-                                    style: AppText.smallTextStyle(Colors.grey.shade500),
-                                  ),
+                            TextButton(
+                              onPressed: () {},
+                              child: Text(
+                                '¿Olvidaste tu contraseña?',
+                                style: AppText.smallTextStyle(Colors.grey.shade500),
+                              ),
+                            ),
+                            TextButton(
+                              onPressed: () {},
+                              child: Text(
+                                'Regístrate',
+                                style: AppText.smallTextStyle(
+                                  AppColors.primaryColorLight,
                                 ),
-                                TextButton(
-                                  onPressed: () {},
-                                  child: Text(
-                                    'Regístrate',
-                                    style: AppText.smallTextStyle(
-                                      AppColors.primaryColorLight,
-                                    ),
-                                  ),
-                                ),
-                              ],
+                              ),
                             ),
                           ],
                         ),
@@ -136,7 +132,7 @@ class _BlurBoxState extends State<BlurBox> {
                             color: AppColors.primaryColorLight,
                             onPressed: () async {
                               try {
-                                final credential = await FirebaseAuth.instance
+                                await FirebaseAuth.instance
                                     .signInWithEmailAndPassword(
                                   email: userController.text.trim(),
                                   password: passwordController.text.trim(),
@@ -148,6 +144,12 @@ class _BlurBoxState extends State<BlurBox> {
                                     backgroundColor: Colors.green,
                                   ),
                                 );
+                                setState(() {
+                                  userController.clear();
+                                  passwordController.clear();
+                                  btnProvider.hideBlur();
+                                });
+
                               } on FirebaseAuthException catch (e) {
                                 String errorMessage;
                                 if (e.code == 'user-not-found') {
@@ -157,18 +159,6 @@ class _BlurBoxState extends State<BlurBox> {
                                 } else {
                                   errorMessage = 'Error de autenticación.';
                                 }
-                                ScaffoldMessenger.of(context).showSnackBar(
-                                  SnackBar(
-                                    content: Text(errorMessage, style: AppText.smallTextStyle(Colors.white),),
-                                    backgroundColor: Colors.red,
-                                  ),
-                                );
-                              } finally {
-                                setState(() {
-                                  userController.clear();
-                                  passwordController.clear();
-                                  btnProvider.hideBlur();
-                                });
                               }
                             },
                             child: Text(
