@@ -7,10 +7,12 @@ class AuthTextField extends StatelessWidget {
     required this.nombre,
     required this.hintText,
     this.hidePassword,
+    this.suffixIcon,
   });
 
   final TextEditingController nombre;
   final String hintText;
+  Widget? suffixIcon;
   bool? hidePassword = false;
 
   @override
@@ -25,6 +27,7 @@ class AuthTextField extends StatelessWidget {
         controller: nombre,
         cursorColor: Colors.blue,
         decoration: InputDecoration(
+          suffixIcon: suffixIcon,
           counterText: "",
           hintText: hintText,
           hintStyle: AppText.smallTextStyle(Colors.grey.shade500),
