@@ -106,7 +106,7 @@ class _RandomTeamsScreenState extends State<RandomTeamsScreen> {
                 ? Container(
                   height: 80,
                   width: MediaQuery.sizeOf(context).width,
-                  color: Colors.white,
+                  color: Colors.transparent,
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [

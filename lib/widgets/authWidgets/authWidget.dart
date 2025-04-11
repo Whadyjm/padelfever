@@ -10,14 +10,14 @@ import '../../services/firebase_services.dart';
 import '../../theme/colors.dart';
 import '../../theme/text.dart';
 
-class BlurBox extends StatefulWidget {
-  const BlurBox({super.key});
+class AuthWidget extends StatefulWidget {
+  const AuthWidget({super.key});
 
   @override
-  State<BlurBox> createState() => _BlurBoxState();
+  State<AuthWidget> createState() => _AuthWidgetState();
 }
 
-class _BlurBoxState extends State<BlurBox> {
+class _AuthWidgetState extends State<AuthWidget> {
   bool _isLoading = false;
   TextEditingController userController = TextEditingController();
   TextEditingController passwordController = TextEditingController();

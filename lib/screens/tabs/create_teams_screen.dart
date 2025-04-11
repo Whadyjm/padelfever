@@ -253,7 +253,7 @@ class _CreateTeamsScreenState extends State<CreateTeamsScreen> {
                 ? Container(
                   height: 80,
                   width: MediaQuery.sizeOf(context).width,
-                  color: Colors.white,
+                  color: Colors.transparent,
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
