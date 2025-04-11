@@ -1,4 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -9,7 +10,6 @@ import '../theme/colors.dart';
 import '../theme/text.dart';
 
 class FirebaseServices {
-
   // Método para autenticar al usuario con Firebase
   Future Auth(context, userController, passwordController) async {
     final btnProvider = Provider.of<BtnProvider>(context, listen: false);
@@ -20,21 +20,20 @@ class FirebaseServices {
         password: passwordController.text.trim(),
       );
       Navigator.of(context).pop();
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-              content: Text(
-                'Inicio de sesión exitoso',
-                style: AppText.smallTextStyle(Colors.white),
-              ),
-              backgroundColor: Colors.green,
-              behavior: SnackBarBehavior.floating,
-            ),
-          );
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(
+            'Inicio de sesión exitoso',
+            style: AppText.smallTextStyle(Colors.white),
+          ),
+          backgroundColor: Colors.green,
+          behavior: SnackBarBehavior.floating,
+        ),
+      );
       userController.clear();
       passwordController.clear();
 
       btnProvider.success = true;
-
     } on FirebaseAuthException catch (e) {
       String errorMessage;
       switch (e.code) {
@@ -70,6 +69,39 @@ class FirebaseServices {
     } finally {
       userController.clear();
       passwordController.clear();
+    }
+  }
+
+  Future Register(
+    context,
+    userController,
+    emailController,
+    passwordContrller,
+  ) async {
+    final btnProvider = Provider.of<BtnProvider>(context, listen: false);
+    try {
+      await FirebaseAuth.instance.createUserWithEmailAndPassword(
+        email: emailController.text.trim(),
+        password: passwordContrller.text.trim(),
+      );
+      Navigator.of(context).pop();
+      Navigator.of(context).pop();
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(
+            'Registro exitoso',
+            style: AppText.smallTextStyle(Colors.white),
+          ),
+          backgroundColor: Colors.green,
+          behavior: SnackBarBehavior.floating,
+        ),
+      );
+      btnProvider.success = true;
+    } catch (e) {
+    } finally {
+      userController.clear();
+      emailController.clear();
+      passwordContrller.clear();
     }
   }
 }

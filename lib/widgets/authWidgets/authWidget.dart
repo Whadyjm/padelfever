@@ -20,6 +20,7 @@ class AuthWidget extends StatefulWidget {
 class _AuthWidgetState extends State<AuthWidget> {
   bool _isLoading = false;
   TextEditingController userController = TextEditingController();
+  TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
 
   @override
@@ -144,24 +145,16 @@ class _AuthWidgetState extends State<AuthWidget> {
                     children: [
                       IconButton(
                         onPressed: () => Navigator.pop(context),
-                        icon: Icon(
-                          Icons.close_rounded,
-                          color: Colors.grey,
-                        ),
+                        icon: Icon(Icons.close_rounded, color: Colors.grey),
                       ),
                     ],
                   ),
                   Text(
                     'Inicio de sesión',
-                    style: AppText.titleStyle(
-                      AppColors.primaryColorLight,
-                    ),
+                    style: AppText.titleStyle(AppColors.primaryColorLight),
                   ),
                   const SizedBox(height: 10),
-                  AuthTextField(
-                    nombre: userController,
-                    hintText: 'Usuario',
-                  ),
+                  AuthTextField(nombre: userController, hintText: 'Usuario'),
                   const SizedBox(height: 10),
                   AuthTextField(
                     hidePassword: true,
@@ -173,13 +166,13 @@ class _AuthWidgetState extends State<AuthWidget> {
                     onPressed: () {},
                     child: Text(
                       '¿Olvidaste tu contraseña?',
-                      style: AppText.smallTextStyle(
-                        Colors.grey.shade500,
-                      ),
+                      style: AppText.smallTextStyle(Colors.grey.shade500),
                     ),
                   ),
                   TextButton(
-                    onPressed: () {},
+                    onPressed: () async {
+                      registerAlertDialog(context, btnProvider);
+                    },
                     child: Text(
                       'Regístrate',
                       style: AppText.smallTextStyle(
@@ -199,9 +192,7 @@ class _AuthWidgetState extends State<AuthWidget> {
                         void Function(void Function()) setState,
                       ) => MaterialButton(
                         shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.all(
-                            Radius.circular(8),
-                          ),
+                          borderRadius: BorderRadius.all(Radius.circular(8)),
                         ),
                         height: 50,
                         minWidth: 200,
@@ -224,17 +215,14 @@ class _AuthWidgetState extends State<AuthWidget> {
                                 ? SizedBox(
                                   height: 20,
                                   width: 20,
-                                  child:
-                                      CircularProgressIndicator(
-                                        color: Colors.white,
-                                        strokeWidth: 4,
-                                      ),
+                                  child: CircularProgressIndicator(
+                                    color: Colors.white,
+                                    strokeWidth: 4,
+                                  ),
                                 )
                                 : Text(
                                   'Iniciar sesión',
-                                  style: AppText.smallTextStyle(
-                                    Colors.white,
-                                  ),
+                                  style: AppText.smallTextStyle(Colors.white),
                                 ),
                       ),
                 ),
@@ -259,15 +247,15 @@ class _AuthWidgetState extends State<AuthWidget> {
     }
   }
 
-  Future<void> authProcess(setState, BuildContext context, BtnProvider btnProvider) async {
+  Future<void> authProcess(
+    setState,
+    BuildContext context,
+    BtnProvider btnProvider,
+  ) async {
     setState(() {
       _isLoading = true;
     });
-    await FirebaseServices().Auth(
-      context,
-      userController,
-      passwordController,
-    );
+    await FirebaseServices().Auth(context, userController, passwordController);
     btnProvider.success
         ? setState(() {
           _isLoading = false;
@@ -276,5 +264,112 @@ class _AuthWidgetState extends State<AuthWidget> {
         : setState(() {
           _isLoading = false;
         });
+  }
+
+  void registerAlertDialog(BuildContext context, BtnProvider btnProvider) {
+    showDialog(
+      barrierDismissible: false,
+      context: context,
+      builder:
+          (context) => AlertDialog(
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.all(Radius.circular(12)),
+            ),
+            backgroundColor: Colors.white,
+            content: SizedBox(
+              height: 300,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      IconButton(
+                        onPressed: () => Navigator.pop(context),
+                        icon: Icon(Icons.close_rounded, color: Colors.grey),
+                      ),
+                    ],
+                  ),
+                  Text(
+                    'Registro',
+                    style: AppText.titleStyle(AppColors.primaryColorLight),
+                  ),
+                  const SizedBox(height: 10),
+                  AuthTextField(nombre: userController, hintText: 'Usuario'),
+                  const SizedBox(height: 10),
+                  AuthTextField(nombre: emailController, hintText: 'Email'),
+                  const SizedBox(height: 10),
+                  AuthTextField(
+                    hidePassword: true,
+                    nombre: passwordController,
+                    hintText: 'Contraseña',
+                  ),
+                ],
+              ),
+            ),
+            actions: [
+              Center(
+                child: StatefulBuilder(
+                  builder:
+                      (
+                        BuildContext context,
+                        void Function(void Function()) setState,
+                      ) => MaterialButton(
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(8)),
+                        ),
+                        height: 50,
+                        minWidth: 200,
+                        color: AppColors.primaryColorLight,
+                        onPressed: () async {
+                          if (userController.text.isEmpty ||
+                              emailController.text.isEmpty ||
+                              passwordController.text.isEmpty) {
+                            showDialog(
+                              context: context,
+                              builder: (BuildContext context) {
+                                return EmptyFieldsDialog();
+                              },
+                            );
+                            return;
+                          }
+                          setState(() {
+                            _isLoading = true;
+                          });
+                          await FirebaseServices().Register(
+                            context,
+                            userController,
+                            emailController,
+                            passwordController,
+                          );
+                          btnProvider.success
+                              ? setState(() {
+                            _isLoading = false;
+                            btnProvider.hideBlur();
+                          })
+                              : setState(() {
+                            _isLoading = false;
+                          });
+                        },
+                        child:
+                            _isLoading
+                                ? SizedBox(
+                                  height: 20,
+                                  width: 20,
+                                  child: CircularProgressIndicator(
+                                    color: Colors.white,
+                                    strokeWidth: 4,
+                                  ),
+                                )
+                                : Text(
+                                  'Registrarse',
+                                  style: AppText.smallTextStyle(Colors.white),
+                                ),
+                      ),
+                ),
+              ),
+            ],
+          ),
+    );
   }
 }

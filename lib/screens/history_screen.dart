@@ -1,18 +1,29 @@
 import 'package:flutter/material.dart';
 import 'package:padelpoint/providers/colors_provider.dart';
 import 'package:provider/provider.dart';
+import '../alertDialogs/authAlertDialogs/emptyFieldsDialog.dart';
 import '../providers/btn_provider.dart';
 import '../providers/match_provider.dart';
 import '../theme/colors.dart';
 import '../theme/text.dart';
+import '../widgets/authWidgets/authTextField.dart';
 
 /// Pantalla que muestra el historial de partidos jugados
-class HistoryScreen extends StatelessWidget {
+class HistoryScreen extends StatefulWidget {
   static const routeName = '/history'; // Ruta de navegación
-  const HistoryScreen({super.key}); // Constructor
+  const HistoryScreen({super.key});
+  @override
+  State<HistoryScreen> createState() => _HistoryScreenState();
+}
 
+class _HistoryScreenState extends State<HistoryScreen> {
+ // Constructor
   @override
   Widget build(BuildContext context) {
+    TextEditingController userController = TextEditingController();
+    TextEditingController emailController = TextEditingController();
+    TextEditingController passwordController = TextEditingController();
+    bool _isLoading = false; // Estado de carga para el registro
     // Obtiene la lista de partidos del provider
     final matches = Provider.of<MatchProvider>(context).matches;
     final btnProvider = Provider.of<BtnProvider>(context);
@@ -103,7 +114,111 @@ class HistoryScreen extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
                         TextButton(
-                          onPressed: () {},
+                          onPressed: () {
+                              showDialog(
+                                barrierDismissible: false,
+                                context: context,
+                                builder:
+                                    (context) => AlertDialog(
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.all(Radius.circular(12)),
+                                  ),
+                                  backgroundColor: Colors.white,
+                                  content: SizedBox(
+                                    height: 300,
+                                    child: Column(
+                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      children: [
+                                        Row(
+                                          mainAxisAlignment: MainAxisAlignment.end,
+                                          children: [
+                                            IconButton(
+                                              onPressed: () => Navigator.pop(context),
+                                              icon: Icon(
+                                                Icons.close_rounded,
+                                                color: Colors.grey,
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                        Text(
+                                          'Registro',
+                                          style: AppText.titleStyle(
+                                            AppColors.primaryColorLight,
+                                          ),
+                                        ),
+                                        const SizedBox(height: 10),
+                                        AuthTextField(
+                                          nombre: userController,
+                                          hintText: 'Usuario',
+                                        ),
+                                        const SizedBox(height: 10),
+                                        AuthTextField(
+                                          nombre: emailController,
+                                          hintText: 'Email',
+                                        ),
+                                        const SizedBox(height: 10),
+                                        AuthTextField(
+                                          hidePassword: true,
+                                          nombre: passwordController,
+                                          hintText: 'Contraseña',
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                  actions: [
+                                    Center(
+                                      child: StatefulBuilder(
+                                        builder:
+                                            (
+                                            BuildContext context,
+                                            void Function(void Function()) setState,
+                                            ) => MaterialButton(
+                                          shape: RoundedRectangleBorder(
+                                            borderRadius: BorderRadius.all(
+                                              Radius.circular(8),
+                                            ),
+                                          ),
+                                          height: 50,
+                                          minWidth: 200,
+                                          color: AppColors.primaryColorLight,
+                                          onPressed: () async {
+                                            if (userController.text.isEmpty || emailController.text.isEmpty ||
+                                                passwordController.text.isEmpty) {
+                                              showDialog(
+                                                context: context,
+                                                builder: (BuildContext context) {
+                                                  return EmptyFieldsDialog();
+                                                },
+                                              );
+                                              return;
+                                            }
+                                            ///registro
+                                          },
+                                          child:
+                                          _isLoading
+                                              ? SizedBox(
+                                            height: 20,
+                                            width: 20,
+                                            child:
+                                            CircularProgressIndicator(
+                                              color: Colors.white,
+                                              strokeWidth: 4,
+                                            ),
+                                          )
+                                              : Text(
+                                            'Registrarse',
+                                            style: AppText.smallTextStyle(
+                                              Colors.white,
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              );
+                            },
                           child: Text(
                             '¡Regístrate!',
                             style: AppText.subtitleStyle(
