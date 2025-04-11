@@ -82,6 +82,7 @@ class _BlurBoxState extends State<BlurBox> {
                 color: AppColors.primaryColorLight,
                 onPressed: () async {
                   showDialog(
+                    barrierDismissible: false,
                     context: context,
                     builder:
                         (context) => AlertDialog(
@@ -90,10 +91,22 @@ class _BlurBoxState extends State<BlurBox> {
                           ),
                           backgroundColor: Colors.white,
                           content: SizedBox(
-                            height: 250,
+                            height: 300,
                             child: Column(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.end,
+                                  children: [
+                                    IconButton(
+                                      onPressed: () => Navigator.pop(context),
+                                      icon: Icon(
+                                        Icons.close_rounded,
+                                        color: Colors.grey,
+                                      ),
+                                    ),
+                                  ],
+                                ),
                                 Text(
                                   'Inicio de sesión',
                                   style: AppText.titleStyle(
@@ -150,6 +163,52 @@ class _BlurBoxState extends State<BlurBox> {
                                       minWidth: 200,
                                       color: AppColors.primaryColorLight,
                                       onPressed: () async {
+                                        if (userController.text.isEmpty ||
+                                            passwordController.text.isEmpty) {
+                                          showDialog(
+                                            context: context,
+                                            builder: (BuildContext context) {
+                                              return AlertDialog(
+                                                shape: RoundedRectangleBorder(
+                                                  borderRadius:
+                                                      BorderRadius.all(
+                                                        Radius.circular(12),
+                                                      ),
+                                                ),
+                                                backgroundColor: Colors.white,
+                                                title: Text(
+                                                  'Oops!',
+                                                  style: AppText.titleStyle(
+                                                    Colors.redAccent,
+                                                  ),
+                                                ),
+                                                content: Text(
+                                                  'Por favor, completa todos los campos.',
+                                                  style: AppText.smallTextStyle(
+                                                    Colors.black,
+                                                  ),
+                                                ),
+                                                actions: [
+                                                  TextButton(
+                                                    onPressed: () {
+                                                      Navigator.of(
+                                                        context,
+                                                      ).pop(); // Close the dialog
+                                                    },
+                                                    child: Text(
+                                                      'Reintentar',
+                                                      style: AppText.smallTextStyle(
+                                                        AppColors
+                                                            .primaryColorLight,
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ],
+                                              );
+                                            },
+                                          );
+                                          return;
+                                        }
                                         setState(() {
                                           _isLoading = true;
                                         });
@@ -157,12 +216,15 @@ class _BlurBoxState extends State<BlurBox> {
                                           context,
                                           userController,
                                           passwordController,
-                                          _isLoading,
                                         );
-                                        setState(() {
-                                          _isLoading = false;
-                                          btnProvider.hideBlur();
-                                        });
+                                        btnProvider.success
+                                            ? setState(() {
+                                              _isLoading = false;
+                                              btnProvider.hideBlur();
+                                            })
+                                            : setState(() {
+                                              _isLoading = false;
+                                            });
                                       },
                                       child:
                                           _isLoading
@@ -213,6 +275,7 @@ class _BlurBoxState extends State<BlurBox> {
                     setState(() {
                       _isLoading = false;
                       btnProvider.hideBlur();
+                      btnProvider.setGuest();
                     });
                   }
                 },
