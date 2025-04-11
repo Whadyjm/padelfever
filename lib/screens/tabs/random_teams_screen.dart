@@ -5,6 +5,7 @@ import 'package:padelpoint/widgets/publicidadWidget.dart';
 import 'package:provider/provider.dart';
 import '../../models/game.dart';
 import '../../models/player.dart';
+import '../../providers/btn_provider.dart';
 import '../../providers/match_provider.dart';
 import '../../theme/text.dart';
 import '../../widgets/PlayersTextField.dart';
@@ -20,13 +21,16 @@ class RandomTeamsScreen extends StatefulWidget {
 }
 
 class _RandomTeamsScreenState extends State<RandomTeamsScreen> {
-  final _playerController = TextEditingController(); // Controlador para el campo de jugador
+  final _playerController =
+      TextEditingController(); // Controlador para el campo de jugador
   final List<Player> _players = []; // Lista de jugadores agregados
-  GameSystem _gameSystem = GameSystem.advantage; // Sistema de juego seleccionado
+  GameSystem _gameSystem =
+      GameSystem.advantage; // Sistema de juego seleccionado
 
   /// Agrega un nuevo jugador a la lista
   void _addPlayer() {
-    if (_playerController.text.isEmpty) return; // No hacer nada si el campo está vacío
+    if (_playerController.text.isEmpty)
+      return; // No hacer nada si el campo está vacío
 
     setState(() {
       _players.add(
@@ -72,11 +76,12 @@ class _RandomTeamsScreenState extends State<RandomTeamsScreen> {
     Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (ctx) => MatchScreen(
-          team1: teams[0],
-          team2: teams[1],
-          gameSystem: _gameSystem,
-        ),
+        builder:
+            (ctx) => MatchScreen(
+              team1: teams[0],
+              team2: teams[1],
+              gameSystem: _gameSystem,
+            ),
       ),
     );
   }
@@ -90,12 +95,34 @@ class _RandomTeamsScreenState extends State<RandomTeamsScreen> {
   @override
   Widget build(BuildContext context) {
     final matchProvider = Provider.of<MatchProvider>(context);
+    final btnProvider = Provider.of<BtnProvider>(context);
 
     return Scaffold(
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16),
         child: Column(
           children: [
+            btnProvider.isGuest
+                ? Container(
+                  height: 80,
+                  width: MediaQuery.sizeOf(context).width,
+                  color: Colors.white,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      GestureDetector(
+                        onTap: () {},
+                        child: Text(
+                          '¿Eres Club?\nRegístrate ahora y obtén tu web personalizada\nContáctanos 🚀🎾',
+                          style: AppText.smallTextStyle(Colors.grey.shade600),
+                          textAlign: TextAlign.center,
+                        ),
+                      ),
+                    ],
+                  ),
+                )
+                : const SizedBox.shrink(),
+            const SizedBox(height: 20),
             // Widget de publicidad
             PublicidadWidget(),
             const SizedBox(height: 20),
@@ -117,12 +144,12 @@ class _RandomTeamsScreenState extends State<RandomTeamsScreen> {
                 _players.isEmpty
                     ? const SizedBox.shrink()
                     : Padding(
-                  padding: const EdgeInsets.only(right: 2),
-                  child: Text(
-                    '${_players.length}',
-                    style: AppText.smallTextStyle(Colors.grey.shade700),
-                  ),
-                ),
+                      padding: const EdgeInsets.only(right: 2),
+                      child: Text(
+                        '${_players.length}',
+                        style: AppText.smallTextStyle(Colors.grey.shade700),
+                      ),
+                    ),
 
                 // Botón para agregar jugador
                 FloatingActionButton(
@@ -144,30 +171,31 @@ class _RandomTeamsScreenState extends State<RandomTeamsScreen> {
             // Lista de jugadores o mensaje si está vacía
             _players.isEmpty
                 ? Text(
-              'No hay jugadores agregados',
-              style: AppText.smallTextStyle(Colors.grey.shade500),
-            )
+                  'No hay jugadores agregados',
+                  style: AppText.smallTextStyle(Colors.grey.shade500),
+                )
                 : Column(
-              children: _players
-                  .map(
-                    (player) => ListTile(
-                  title: Text(
-                    player.name,
-                    style: AppText.smallTextStyle(
-                      Colors.grey.shade700,
-                    ),
-                  ),
-                  trailing: IconButton(
-                    icon: const Icon(
-                      Icons.remove,
-                      color: Colors.redAccent,
-                    ),
-                    onPressed: () => _removePlayer(player),
-                  ),
+                  children:
+                      _players
+                          .map(
+                            (player) => ListTile(
+                              title: Text(
+                                player.name,
+                                style: AppText.smallTextStyle(
+                                  Colors.grey.shade700,
+                                ),
+                              ),
+                              trailing: IconButton(
+                                icon: const Icon(
+                                  Icons.remove,
+                                  color: Colors.redAccent,
+                                ),
+                                onPressed: () => _removePlayer(player),
+                              ),
+                            ),
+                          )
+                          .toList(),
                 ),
-              )
-                  .toList(),
-            ),
 
             const SizedBox(height: 20),
 

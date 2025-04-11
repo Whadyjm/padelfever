@@ -38,17 +38,24 @@ class CreateTeamsScreen extends StatefulWidget {
 class _CreateTeamsScreenState extends State<CreateTeamsScreen> {
   // Controladores para los campos de texto del formulario
   final _formKey = GlobalKey<FormState>(); // Key para validación de formulario
-  final _team1NameController = TextEditingController(); // Controlador nombre equipo 1
-  final _team2NameController = TextEditingController(); // Controlador nombre equipo 2
-  final _team1Player1Controller = TextEditingController(); // Controlador jugador 1 equipo 1
-  final _team1Player2Controller = TextEditingController(); // Controlador jugador 2 equipo 1
-  final _team2Player1Controller = TextEditingController(); // Controlador jugador 1 equipo 2
-  final _team2Player2Controller = TextEditingController(); // Controlador jugador 2 equipo 2
+  final _team1NameController =
+      TextEditingController(); // Controlador nombre equipo 1
+  final _team2NameController =
+      TextEditingController(); // Controlador nombre equipo 2
+  final _team1Player1Controller =
+      TextEditingController(); // Controlador jugador 1 equipo 1
+  final _team1Player2Controller =
+      TextEditingController(); // Controlador jugador 2 equipo 1
+  final _team2Player1Controller =
+      TextEditingController(); // Controlador jugador 1 equipo 2
+  final _team2Player2Controller =
+      TextEditingController(); // Controlador jugador 2 equipo 2
 
   // Estados internos del widget
   bool team1Ready = false; // Indica si equipo 1 está completo
   bool team2Ready = false; // Indica si equipo 2 está completo
-  GameSystem _gameSystem = GameSystem.advantage; // Sistema de juego seleccionado
+  GameSystem _gameSystem =
+      GameSystem.advantage; // Sistema de juego seleccionado
   Color _team1Color = Colors.blue; // Color del equipo 1
   Color _team2Color = Colors.green; // Color del equipo 2
 
@@ -242,7 +249,27 @@ class _CreateTeamsScreenState extends State<CreateTeamsScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            btnProvider.isGuest
+                ? Container(
+                  height: 80,
+                  width: MediaQuery.sizeOf(context).width,
+                  color: Colors.white,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      GestureDetector(
+                        onTap: (){},
+                        child: Text(
+                          '¿Eres Club?\nRegístrate ahora y obtén tu web personalizada\nContáctanos 🚀🎾',
+                          style: AppText.smallTextStyle(Colors.grey.shade600), textAlign: TextAlign.center,
+                        ),
+                      ),
+                    ],
+                  ),
+                )
+                : const SizedBox.shrink(),
             // Widget de publicidad
+            const SizedBox(height: 20),
             PublicidadWidget(),
             const SizedBox(height: 20),
 
@@ -282,10 +309,10 @@ class _CreateTeamsScreenState extends State<CreateTeamsScreen> {
                   child: FloatingActionButton(
                     elevation: 0,
                     backgroundColor:
-                    (_team1Player1Controller.text.isNotEmpty &&
-                        _team1Player2Controller.text.isNotEmpty)
-                        ? AppColors.secondaryColorLight
-                        : Colors.grey.shade300,
+                        (_team1Player1Controller.text.isNotEmpty &&
+                                _team1Player2Controller.text.isNotEmpty)
+                            ? AppColors.secondaryColorLight
+                            : Colors.grey.shade300,
                     onPressed: () {},
                     child: Icon(Icons.check, color: Colors.white),
                   ),
@@ -356,10 +383,10 @@ class _CreateTeamsScreenState extends State<CreateTeamsScreen> {
                   child: FloatingActionButton(
                     elevation: 0,
                     backgroundColor:
-                    (_team2Player1Controller.text.isNotEmpty &&
-                        _team2Player2Controller.text.isNotEmpty)
-                        ? AppColors.secondaryColorLight
-                        : Colors.grey.shade300,
+                        (_team2Player1Controller.text.isNotEmpty &&
+                                _team2Player2Controller.text.isNotEmpty)
+                            ? AppColors.secondaryColorLight
+                            : Colors.grey.shade300,
                     onPressed: () {},
                     child: Icon(Icons.check, color: Colors.white),
                   ),
@@ -451,12 +478,12 @@ class _CreateTeamsScreenState extends State<CreateTeamsScreen> {
               children: [
                 AppBtn(
                   isEnabled:
-                  (_team1Player1Controller.text.isNotEmpty &&
-                      _team1Player2Controller.text.isNotEmpty &&
-                      _team2Player1Controller.text.isNotEmpty &&
-                      _team2Player2Controller.text.isNotEmpty)
-                      ? true
-                      : false,
+                      (_team1Player1Controller.text.isNotEmpty &&
+                              _team1Player2Controller.text.isNotEmpty &&
+                              _team2Player1Controller.text.isNotEmpty &&
+                              _team2Player2Controller.text.isNotEmpty)
+                          ? true
+                          : false,
                   text: 'Comenzar partido',
                   onPressed: () {
                     // Guarda los colores seleccionados
@@ -498,10 +525,10 @@ class _CreateTeamsScreenState extends State<CreateTeamsScreen> {
                       MaterialPageRoute(
                         builder:
                             (ctx) => MatchScreen(
-                          team1: team1,
-                          team2: team2,
-                          gameSystem: _gameSystem,
-                        ),
+                              team1: team1,
+                              team2: team2,
+                              gameSystem: _gameSystem,
+                            ),
                       ),
                     );
                   },
